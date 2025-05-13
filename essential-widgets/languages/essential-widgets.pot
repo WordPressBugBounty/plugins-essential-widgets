@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Essential Widgets\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2024-04-10 22:33+0545\n"
+"POT-Creation-Date: 2025-05-13 21:07+0545\n"
 "PO-Revision-Date: 2016-12-12 09:23-0500\n"
 "Last-Translator: Sakin Shrestha <info@catchplugins.com>\n"
 "Language-Team: Catch Plugins <info@catchplugins.com>\n"
@@ -14,10 +14,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 3.4.2\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;esc_attr_e;esc_attr__;_nx;_x;"
-"esc_html_e;esc_html__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_n_noop:1,2;"
-"__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
+"X-Generator: Poedit 3.6\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_n:1,2;_x:1,2c;esc_attr_e;esc_attr__;_nx;_x;esc_html_e;esc_html__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_n_noop:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: ..\n"
@@ -211,7 +210,7 @@ msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:115
 #: ../admin/partials/essential-widgets-admin-display.php:216
-#: ../essential-widgets.php:125 ../includes/widgets/class-ew-authors.php:60
+#: ../includes/widgets/class-ew-authors.php:60
 msgid "EW: Authors"
 msgstr ""
 
@@ -254,7 +253,7 @@ msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:130
 #: ../admin/partials/essential-widgets-admin-display.php:184
-#: ../essential-widgets.php:128 ../includes/widgets/class-ew-pages.php:64
+#: ../includes/widgets/class-ew-pages.php:64
 msgid "EW: Pages"
 msgstr ""
 
@@ -281,7 +280,7 @@ msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:140
 #: ../admin/partials/essential-widgets-admin-display.php:200
-#: ../essential-widgets.php:131 ../includes/widgets/class-ew-tags.php:66
+#: ../includes/widgets/class-ew-tags.php:66
 msgid "EW: Tags"
 msgstr ""
 
@@ -425,22 +424,6 @@ msgid ""
 "version first. %1$s&laquo; Return to Plugins%2$s."
 msgstr ""
 
-#: ../essential-widgets.php:126
-msgid "EW: Category"
-msgstr ""
-
-#: ../essential-widgets.php:127
-msgid "EW: Menu"
-msgstr ""
-
-#: ../essential-widgets.php:129
-msgid "EW: Post"
-msgstr ""
-
-#: ../essential-widgets.php:130
-msgid "EW: Recent Posts"
-msgstr ""
-
 #: ../includes/CatchThemesThemePlugin.php:154
 msgid "Themes by CatchThemes"
 msgstr ""
@@ -461,27 +444,27 @@ msgstr ""
 msgid "ew-block/ew-category"
 msgstr ""
 
-#: ../includes/ew-block/blocks/ew-author/index.php:11
+#: ../includes/ew-block/blocks/ew-author/index.php:83
 #: ../includes/widgets/class-ew-authors.php:32
 msgid "Authors"
 msgstr ""
 
-#: ../includes/ew-block/blocks/ew-category/index.php:11
+#: ../includes/ew-block/blocks/ew-category/index.php:103
 #: ../includes/widgets/class-ew-categories.php:26
 msgid "Categories"
 msgstr ""
 
-#: ../includes/ew-block/blocks/ew-menu/index.php:11
+#: ../includes/ew-block/blocks/ew-menu/index.php:76
 #: ../includes/widgets/class-ew-menus.php:30
 msgid "Navigation"
 msgstr ""
 
-#: ../includes/ew-block/blocks/ew-page/index.php:11
+#: ../includes/ew-block/blocks/ew-page/index.php:100
 #: ../includes/widgets/class-ew-pages.php:32
 msgid "Pages"
 msgstr ""
 
-#: ../includes/ew-block/blocks/ew-post/index.php:11
+#: ../includes/ew-block/blocks/ew-post/index.php:52
 #: ../includes/widgets/class-ew-posts.php:30
 msgid "Posts"
 msgstr ""
@@ -495,7 +478,7 @@ msgid_plural "%s topics"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../includes/ew-block/blocks/ew-tags/index.php:14
+#: ../includes/ew-block/blocks/ew-tags/index.php:119
 #: ../includes/widgets/class-ew-tags.php:30
 msgid "Tags"
 msgstr ""

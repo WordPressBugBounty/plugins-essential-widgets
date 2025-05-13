@@ -3,12 +3,12 @@ Contributors: catchplugins, catchthemes, sakinshrestha, pratikshrestha, maheshma
 Donate link: https://catchplugins.com/plugins/essential-widgets-pro/
 Tags: widgets, pages, posts, tags, categories
 Requires at least: 5.9
-Tested up to: 6.5
+Tested up to: 6.8
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Essential Widgets is a WordPress plugin for widgets that allows you to create and add amazing widgets with high customization option on your website without affecting your wallet.
+Essential Widgets is a WordPress plugin for widgets that allows you to create and add amazing widgets with high customization option
 
 == Description ==
 
@@ -74,6 +74,10 @@ Not so easy way (via FTP) :
 7. Tags
 
 == Changelog ==
+
+= 2.2.2 (Released: May 13, 2025) =
+* Bug Fixed: Translation loading
+* Compatibility check up to version 6.8
 
 = 2.2.1 (Released: April 10, 2024) =
 * Compatibility check up to version 6.5

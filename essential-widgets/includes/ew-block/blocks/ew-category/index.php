@@ -8,7 +8,7 @@ if ( function_exists( 'register_block_type' ) ) :
 			'attributes'      => array(
 				'title'              => array(
 					'type'    => 'string',
-					'default' => esc_html__( 'Categories', 'essential-widgets' ),
+					'default' 	=> 'Categories', // No translation here
 				),
 				'taxonomy'           => array(
 					'type'    => 'string',
@@ -99,7 +99,9 @@ endif;
 if ( ! function_exists( 'ew_category_render_shortcode' ) ) :
 	add_shortcode( 'ew-category', 'ew_category_render_shortcode' );
 	function ew_category_render_shortcode( $atts ) {
-		$instance['title']              = $atts['title'];
+		$instance['title']         = isset( $atts['title'] ) && 'Categories' === $atts['title']
+			? esc_html__( 'Categories', 'essential-widgets' )
+			: $atts['title'];
 		$instance['taxonomy']           = $atts['taxonomy'];
 		$instance['style']              = $atts['style'];
 		$instance['include']            = $atts['include'];

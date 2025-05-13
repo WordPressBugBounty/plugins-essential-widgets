@@ -8,7 +8,7 @@ if ( function_exists( 'register_block_type' ) ) :
 			'attributes'      => array(
 				'title'           => array(
 					'type'    => 'string',
-					'default' => esc_html__( 'Navigation', 'essential-widgets' ),
+					'default' 	=> 'Navigation', // No translation here
 				),
 				'menu'            => array(
 					'type'    => 'string',
@@ -72,7 +72,9 @@ endif;
 if ( ! function_exists( 'ew_menu_render_shortcode' ) ) :
 	add_shortcode( 'ew-menu', 'ew_menu_render_shortcode' );
 	function ew_menu_render_shortcode( $atts ) {
-		$instance['title']           = $atts['title'];
+		$instance['title']         = isset( $atts['title'] ) && 'Navigation' === $atts['title']
+			? esc_html__( 'Navigation', 'essential-widgets' )
+			: $atts['title'];
 		$instance['menu']            = $atts['menu'];
 		$instance['container']       = $atts['container'];
 		$instance['container_id']    = $atts['container_id'];

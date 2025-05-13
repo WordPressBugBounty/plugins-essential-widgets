@@ -16,7 +16,7 @@
  * Plugin Name:       Essential Widgets
  * Plugin URI:        https://catchplugins.com/plugins/essential-widgets/
  * Description:       Essential Widgets is a WordPress plugin for widgets that allows you to create and add amazing widgets with high customization option on your website without affecting your wallet.
- * Version:           2.2.1
+ * Version:           2.2.2
  * Author:            Catch Plugins
  * Author URI:        https://catchplugins.com/
  * License:           GPL-2.0+
@@ -31,7 +31,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 // Define Version
-define( 'ESSENTIAL_WIDGETS_VERSION', '2.2.1' );
+define( 'ESSENTIAL_WIDGETS_VERSION', '2.2.2' );
 
 /**
  * The code that runs during plugin activation.
@@ -106,6 +106,8 @@ if ( ! function_exists( 'essential_widgets_default_options' ) ) :
 	 */
 	function essential_widgets_default_options( $option = null ) {
 		$widget_list = essential_widgets_list();
+		$default_options = array();
+
 		foreach ( $widget_list as $key => $value ) {
 			$default_options[ $key ] = 1;
 		}
@@ -122,13 +124,13 @@ endif; // essential_widgets_default_options
 if ( ! function_exists( 'essential_widgets_list' ) ) :
 	function essential_widgets_list() {
 		$widget_list = array(
-			'ew_authors'    => esc_html__( 'EW: Authors', 'essential-widgets' ),
-			'ew_categories' => esc_html__( 'EW: Category', 'essential-widgets' ),
-			'ew_menus'      => esc_html__( 'EW: Menu', 'essential-widgets' ),
-			'ew_pages'      => esc_html__( 'EW: Pages', 'essential-widgets' ),
-			'ew_posts'      => esc_html__( 'EW: Post', 'essential-widgets' ),
-			'ew_archives'   => esc_html__( 'EW: Recent Posts', 'essential-widgets' ),
-			'ew_tags'       => esc_html__( 'EW: Tags', 'essential-widgets' ),
+			'ew_authors'    => 'EW: Authors',
+			'ew_categories' => 'EW: Category',
+			'ew_menus'      => 'EW: Menu',
+			'ew_pages'      => 'EW: Pages',
+			'ew_posts'      => 'EW: Post',
+			'ew_archives'   => 'EW: Recent Posts',
+			'ew_tags'       => 'EW: Tags',
 		);
 		return $widget_list;
 	}

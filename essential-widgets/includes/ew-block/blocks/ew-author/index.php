@@ -5,70 +5,70 @@ if ( function_exists( 'register_block_type' ) ) :
 	register_block_type(
 		'ew-block/ew-author',
 		array(
-			'attributes'      => array(
-				'title'         => array(
-					'type'    => 'string',
-					'default' => esc_html__( 'Authors', 'essential-widgets' ),
+			'attributes'      	=> array(
+				'title' 		=> array(
+					'type'    	=> 'string',
+					'default' 	=> 'Authors', // No translation here
 				),
 				'order'         => array(
-					'type'    => 'string',
-					'default' => 'ASC',
+					'type'    	=> 'string',
+					'default' 	=> 'ASC',
 				),
 				'orderby'       => array(
-					'type'    => 'string',
-					'default' => 'display_name',
+					'type'    	=> 'string',
+					'default' 	=> 'display_name',
 				),
 				'number'        => array(
-					'type'    => 'number',
-					'default' => 5,
+					'type'    	=> 'number',
+					'default' 	=> 5,
 				),
 				'include'       => array(
-					'type'    => 'string',
-					'default' => '',
+					'type'    	=> 'string',
+					'default' 	=> '',
 				),
 				'exclude'       => array(
-					'type'    => 'string',
-					'default' => '',
+					'type'    	=> 'string',
+					'default' 	=> '',
 				),
 				'optioncount'   => array(
-					'type'    => 'boolean',
-					'default' => false,
+					'type'    	=> 'boolean',
+					'default' 	=> false,
 				),
 				'exclude_admin' => array(
-					'type'    => 'boolean',
-					'default' => false,
+					'type'    	=> 'boolean',
+					'default' 	=> false,
 				),
 				'show_fullname' => array(
-					'type'    => 'boolean',
-					'default' => false,
+					'type'    	=> 'boolean',
+					'default' 	=> false,
 				),
 				'hide_empty'    => array(
-					'type'    => 'boolean',
-					'default' => true,
+					'type'    	=> 'boolean',
+					'default' 	=> true,
 				),
 				'style'         => array(
-					'type'    => 'string',
-					'default' => 'list',
+					'type'    	=> 'string',
+					'default' 	=> 'list',
 				),
 				'html'          => array(
-					'type'    => 'boolean',
-					'default' => true,
+					'type'    	=> 'boolean',
+					'default' 	=> true,
 				),
 				'feed'          => array(
-					'type'    => 'string',
-					'default' => '',
+					'type'    	=> 'string',
+					'default' 	=> '',
 				),
 				'feed_type'     => array(
-					'type'    => 'string',
-					'default' => '',
+					'type'    	=> 'string',
+					'default' 	=> '',
 				),
 				'feed_image'    => array(
-					'type'    => 'string',
-					'default' => '',
+					'type'    	=> 'string',
+					'default' 	=> '',
 				),
 				'is_block'      => array(
-					'type'    => 'boolean',
-					'default' => true,
+					'type'    	=> 'boolean',
+					'default' 	=> true,
 				),
 			),
 			'render_callback' => 'ew_author_render_shortcode',
@@ -79,7 +79,9 @@ endif;
 if ( ! function_exists( 'ew_author_render_shortcode' ) ) :
 	add_shortcode( 'ew-author', 'ew_author_render_shortcode' );
 	function ew_author_render_shortcode( $atts ) {
-		$instance['title']         = $atts['title'];
+		$instance['title']         = isset( $atts['title'] ) && 'Authors' === $atts['title']
+			? esc_html__( 'Authors', 'essential-widgets' )
+			: $atts['title'];
 		$instance['order']         = $atts['order'];
 		$instance['orderby']       = $atts['orderby'];
 		$instance['number']        = $atts['number'];

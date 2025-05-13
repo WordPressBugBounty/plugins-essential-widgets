@@ -8,7 +8,7 @@ if ( function_exists( 'register_block_type' ) ) :
 			'attributes'      => array(
 				'title'        => array(
 					'type'    => 'string',
-					'default' => esc_html__( 'Pages', 'essential-widgets' ),
+					'default' 	=> 'Pages', // No translation here
 				),
 				'post_type'    => array(
 					'type'    => 'string',
@@ -96,7 +96,9 @@ endif;
 if ( ! function_exists( 'ew_page_render_shortcode' ) ) :
 	add_shortcode( 'ew-page', 'ew_page_render_shortcode' );
 	function ew_page_render_shortcode( $atts ) {
-		$instance['title']        = $atts['title'];
+		$instance['title']         = isset( $atts['title'] ) && 'Pages' === $atts['title']
+			? esc_html__( 'Pages', 'essential-widgets' )
+			: $atts['title'];
 		$instance['post_type']    = $atts['post_type'];
 		$instance['depth']        = $atts['depth'];
 		$instance['number']       = $atts['number'];

@@ -11,7 +11,7 @@ if ( function_exists( 'register_block_type' ) ) :
 			'attributes'      => array(
 				'title'                      => array(
 					'type'    => 'string',
-					'default' => esc_html__( 'Tags', 'essential-widgets' ),
+					'default' 	=> 'Tags', // No translation here
 				),
 				'order'                      => array(
 					'type'    => 'string',
@@ -115,7 +115,9 @@ endif;
 if ( ! function_exists( 'ew_tags_render_shortcode' ) && class_exists( 'EW_Tags' ) ) :
 	add_shortcode( 'ew-tags', 'ew_tags_render_shortcode' );
 	function ew_tags_render_shortcode( $atts ) {
-		$instance['title']                      = $atts['title'];
+		$instance['title']         = isset( $atts['title'] ) && 'Tags' === $atts['title']
+			? esc_html__( 'Tags', 'essential-widgets' )
+			: $atts['title'];
 		$instance['order']                      = $atts['order'];
 		$instance['orderby']                    = $atts['orderby'];
 		$instance['format']                     = $atts['format'];
