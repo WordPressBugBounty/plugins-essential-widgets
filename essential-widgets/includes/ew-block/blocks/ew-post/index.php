@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
 // Hook the post rendering to the block
 if ( function_exists( 'register_block_type' ) ) :
 	register_block_type(
@@ -50,14 +54,19 @@ if ( ! function_exists( 'ew_post_render_shortcode' ) ) :
 	function ew_post_render_shortcode( $atts ) {
 		$instance['title']         = isset( $atts['title'] ) && 'Posts' === $atts['title']
 			? esc_html__( 'Posts', 'essential-widgets' )
-			: $atts['title'];
-		$instance['post_type']   = $atts['post_type'];
-		$instance['number']      = $atts['number'];
-		$instance['show_date']   = $atts['show_date'];
-		$instance['show_author'] = $atts['show_author'];
-		$instance['order']       = $atts['order'];
-		$instance['orderby']     = $atts['orderby'];
-		$instance['is_block']    = $atts['is_block'];
+			: sanitize_text_field( $atts['title'] );
+		$instance['post_type']   = array_map('sanitize_key', (array) $atts['post_type']);
+		$instance['number']      = intval($atts['number']);
+		$instance['show_date']   = !empty($atts['show_date']);
+		$instance['show_author'] = !empty($atts['show_author']);
+		$instance['order'] = ( isset( $atts['order'] ) && in_array( $atts['order'], ['ASC','DESC'], true ) )
+		    ? $atts['order']
+		    : 'DESC';
+
+		$instance['orderby'] = ( isset( $atts['orderby'] ) && in_array( $atts['orderby'], ['author','name','none','type','date','ID','modified','parent','comment_count','menu_order','title'], true ) )
+		    ? $atts['orderby']
+		    : 'date';
+		$instance['is_block']    = !empty($atts['is_block']);
 
 		$ew_post = new EW_Posts();
 

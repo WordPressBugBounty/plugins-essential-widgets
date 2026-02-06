@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
 /**
  * Posts Widget
  *
@@ -114,7 +118,15 @@ if ( ! class_exists( 'EW_Posts' ) ) :
 			<p>
 				<label>
 					<?php esc_html_e( 'Number:', 'essential-widgets' ); ?>
-					<input type="number" min="1" size="3" class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'number' ) ); ?>" value="<?php echo esc_attr( $instance['number'] ); ?>" placeholder="<?php echo esc_attr( $this->defaults['number'] ); ?>" />
+					<input
+						type="number"
+						min="1"
+						size="3"
+						class="widefat"
+						name="<?php echo esc_attr( $this->get_field_name( 'number' ) ); ?>"
+						value="<?php echo esc_attr( $instance['number'] ); ?>"
+						placeholder="<?php echo esc_attr( $this->defaults['number'] ); ?>"
+					/>
 				</label>
 			</p>
 
@@ -123,13 +135,11 @@ if ( ! class_exists( 'EW_Posts' ) ) :
 					<?php esc_html_e( 'Order:', 'essential-widgets' ); ?>
 
 					<select class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'order' ) ); ?>">
-
 						<?php foreach ( $order as $option_value => $option_label ) : ?>
-
-							<option value="<?php echo $option_value; ?>" <?php selected( $instance['order'], $option_value ); ?>><?php echo $option_label; ?></option>
-
+							<option value="<?php echo esc_attr( $option_value ); ?>" <?php selected( $instance['order'], $option_value ); ?>>
+								<?php echo esc_html( $option_label ); ?>
+							</option>
 						<?php endforeach; ?>
-
 					</select>
 				</label>
 			</p>
@@ -139,13 +149,11 @@ if ( ! class_exists( 'EW_Posts' ) ) :
 					<?php esc_html_e( 'Order By:', 'essential-widgets' ); ?>
 
 					<select class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'orderby' ) ); ?>">
-
 						<?php foreach ( $orderby as $option_value => $option_label ) : ?>
-
-							<option value="<?php echo $option_value; ?>" <?php selected( $instance['orderby'], $option_value ); ?>><?php echo $option_label; ?></option>
-
+							<option value="<?php echo esc_attr( $option_value ); ?>" <?php selected( $instance['orderby'], $option_value ); ?>>
+								<?php echo esc_html( $option_label ); ?>
+							</option>
 						<?php endforeach; ?>
-
 					</select>
 				</label>
 			</p>
@@ -179,31 +187,42 @@ if ( ! class_exists( 'EW_Posts' ) ) :
 		 * Settings to save or bool false to cancel saving
 		 */
 		public function update( $new_instance, $old_instance ) {
-			$instance = $old_instance;
+		    $instance = $old_instance;
 
-			// Sanitize title.
-			$instance['title'] = sanitize_text_field( $new_instance['title'] );
+		    // Sanitize title.
+		    $instance['title'] = isset( $new_instance['title'] )
+		        ? sanitize_text_field( $new_instance['title'] )
+		        : '';
 
-			// Sanitize key.
-			$instance['post_type'] = array_map( 'sanitize_key', $new_instance['post_type'] );
+		    // Sanitize post_type array.
+		    $instance['post_type'] = isset( $new_instance['post_type'] )
+		        ? array_map( 'sanitize_key', (array) $new_instance['post_type'] )
+		        : array( 'post' );
 
-			// Whitelist options.
-			$order   = array( 'ASC', 'DESC' );
-			$orderby = array( 'author', 'name', 'none', 'type', 'date', 'ID', 'modified', 'parent', 'comment_count', 'menu_order', 'title' );
+		    // Whitelist order options.
+		    $order = array( 'ASC', 'DESC' );
+		    $instance['order'] = ( isset( $new_instance['order'] ) && in_array( $new_instance['order'], $order, true ) )
+		        ? $new_instance['order']
+		        : 'DESC';
 
-			$instance['order']   = in_array( $new_instance['order'], $order ) ? $new_instance['order'] : 'DESC';
-			$instance['orderby'] = in_array( $new_instance['orderby'], $orderby ) ? $new_instance['orderby'] : 'date';
+		    // Whitelist orderby options.
+		    $orderby = array( 'author', 'name', 'none', 'type', 'date', 'ID', 'modified', 'parent', 'comment_count', 'menu_order', 'title' );
+		    $instance['orderby'] = ( isset( $new_instance['orderby'] ) && in_array( $new_instance['orderby'], $orderby, true ) )
+		        ? $new_instance['orderby']
+		        : 'date';
 
-			// Integers.
-			$instance['number'] = intval( $new_instance['number'] );
+		    // Sanitize number input.
+		    $instance['number'] = isset( $new_instance['number'] )
+		        ? intval( $new_instance['number'] )
+		        : 10;
 
-			// Checkboxes.
-			$instance['show_date']   = isset( $new_instance['show_date'] ) ? 1 : 0;
-			$instance['show_author'] = isset( $new_instance['show_author'] ) ? 1 : 0;
+		    // Checkboxes: show_date and show_author.
+		    $instance['show_date']   = !empty( $new_instance['show_date'] ) ? 1 : 0;
+		    $instance['show_author'] = !empty( $new_instance['show_author'] ) ? 1 : 0;
 
-			// Return sanitized options.
-			return $instance;
+		    return $instance;
 		}
+
 
 		/**
 		 * Displays the Widget in the front-end.
@@ -212,7 +231,7 @@ if ( ! class_exists( 'EW_Posts' ) ) :
 		 * $instance The settings for the particular instance of the widget
 		 */
 		public function widget( $args, $instance ) {
-			// Set the $args for wp_get_archives() to the $instance array.
+			// Merge instance with defaults.
 			$instance = wp_parse_args( $instance, $this->defaults );
 
 			$loop = new \WP_Query(
@@ -228,20 +247,27 @@ if ( ! class_exists( 'EW_Posts' ) ) :
 			);
 
 			if ( $loop->have_posts() ) :
-				?>
-				<?php echo $args['before_widget']; ?>
 
-				<?php
+				// Escape widget wrapper attributes.
+				echo wp_kses_post( $args['before_widget'] );
+
+				// If a title was input by the user, display it safely.
 				if ( ! empty( $instance['title'] ) ) {
-					echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base ) . $args['after_title'];
+					echo wp_kses_post( $args['before_title'] );
+
+					// Apply filters to title, then escape it for output
+					$title = apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base );
+					echo esc_html( $title );
+
+					echo wp_kses_post( $args['after_title'] );
 				}
-				?>
 
-				<?php echo $this->shortcode( $instance ); ?>
+				// Output the main content of the widget (shortcode output)
+				echo wp_kses_post( $this->shortcode( $instance ) );
 
-				<?php echo $args['after_widget']; ?>
+				// Close the widget wrapper safely.
+				echo wp_kses_post( $args['after_widget'] );
 
-				<?php
 				wp_reset_postdata();
 
 			endif;
@@ -266,7 +292,7 @@ if ( ! class_exists( 'EW_Posts' ) ) :
 
 			// Only show this title in block element and not on widget.
 			if ( isset( $atts['is_block'] ) && true === $atts['is_block'] && !empty( $atts['title'] ) ) {
-				$output .= '<h2 class="ew-post-block-title">' . $atts['title'] . '</h2>';
+				$output .= '<h2 class="ew-post-block-title">' . esc_html( $atts['title'] ) . '</h2>';
 			}
 
 			// Output the page list.
@@ -275,14 +301,14 @@ if ( ! class_exists( 'EW_Posts' ) ) :
 				$loop->the_post();
 
 				$output .= '<li>';
-				$output .= '<a href=' . get_the_permalink() . '>' . get_the_title() . '</a>';
+				$output .= '<a href=' . esc_url( get_the_permalink() ) . '>' . esc_html( get_the_title() ) . '</a>';
 
 				if ( $atts['show_author'] ) :
-					$output .= '<span class="post-author"> by ' . get_the_author() . '</span>';
+					$output .= '<span class="post-author"> by ' . esc_html( get_the_author() ) . '</span>';
 				endif;
 
 				if ( $atts['show_date'] ) :
-					$output .= '<span class="post-date">' . get_the_date() . '</span>';
+					$output .= ' <span class="post-date">' . esc_html( get_the_date() ) . '</span>';
 				endif;
 				$output .= '</li>';
 

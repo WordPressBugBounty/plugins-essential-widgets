@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
 // Hook the post rendering to the block
 if ( function_exists( 'register_block_type' ) ) :
 	register_block_type(
@@ -95,29 +99,77 @@ endif;
 
 if ( ! function_exists( 'ew_page_render_shortcode' ) ) :
 	add_shortcode( 'ew-page', 'ew_page_render_shortcode' );
+
 	function ew_page_render_shortcode( $atts ) {
-		$instance['title']         = isset( $atts['title'] ) && 'Pages' === $atts['title']
+
+		$atts = shortcode_atts(
+			array(
+				'title'         => 'Pages',
+				'post_type'     => 'page',
+				'depth'         => 0,
+				'number'        => 10,
+				'offset'        => 0,
+				'child_of'      => '',
+				'include'       => '',
+				'exclude'       => '',
+				'exclude_tree'  => '',
+				'meta_key'      => '',
+				'meta_value'    => '',
+				'authors'       => '',
+				'link_before'   => '',
+				'link_after'    => '',
+				'show_date'     => '',
+				'hierarchical'  => true,
+				'sort_column'   => 'post_title',
+				'sort_order'    => 'ASC',
+				'date_format'   => '',
+				'is_block'      => true,
+			),
+			$atts,
+			'ew-page'
+		);
+
+		$instance = array();
+
+		$instance['title'] = ( 'Pages' === $atts['title'] )
 			? esc_html__( 'Pages', 'essential-widgets' )
-			: $atts['title'];
-		$instance['post_type']    = $atts['post_type'];
-		$instance['depth']        = $atts['depth'];
-		$instance['number']       = $atts['number'];
-		$instance['offset']       = $atts['offset'];
-		$instance['child_of']     = $atts['child_of'];
-		$instance['include']      = $atts['include'];
-		$instance['exclude']      = $atts['exclude'];
-		$instance['exclude_tree'] = $atts['exclude_tree'];
-		$instance['meta_key']     = $atts['meta_key'];
-		$instance['meta_value']   = $atts['meta_value'];
-		$instance['authors']      = $atts['authors'];
-		$instance['link_before']  = $atts['link_before'];
-		$instance['link_after']   = $atts['link_after'];
-		$instance['show_date']    = $atts['show_date'];
-		$instance['hierarchical'] = $atts['hierarchical'];
-		$instance['sort_column']  = $atts['sort_column'];
-		$instance['sort_order']   = $atts['sort_order'];
-		$instance['date_format']  = $atts['date_format'];
-		$instance['is_block']     = $atts['is_block'];
+			: sanitize_text_field( $atts['title'] );
+
+		$instance['post_type'] = sanitize_key( $atts['post_type'] );
+
+		$instance['depth']   = absint( $atts['depth'] );
+		$instance['number']  = absint( $atts['number'] );
+		$instance['offset']  = absint( $atts['offset'] );
+
+		$instance['child_of']     = absint( $atts['child_of'] );
+		$instance['include']      = sanitize_text_field( $atts['include'] );
+		$instance['exclude']      = sanitize_text_field( $atts['exclude'] );
+		$instance['exclude_tree'] = sanitize_text_field( $atts['exclude_tree'] );
+
+		$instance['meta_key']   = sanitize_key( $atts['meta_key'] );
+		$instance['meta_value'] = sanitize_text_field( $atts['meta_value'] );
+
+		$instance['authors'] = sanitize_text_field( $atts['authors'] );
+
+		$instance['link_before'] = wp_kses_post( $atts['link_before'] );
+		$instance['link_after']  = wp_kses_post( $atts['link_after'] );
+
+		$instance['show_date']   = sanitize_text_field( $atts['show_date'] );
+		$instance['date_format'] = sanitize_text_field( $atts['date_format'] );
+
+		$instance['hierarchical'] = (bool) $atts['hierarchical'];
+		$instance['is_block']     = (bool) $atts['is_block'];
+
+		// Whitelist sorting values
+		$allowed_order = array( 'ASC', 'DESC' );
+		$instance['sort_order'] = in_array( strtoupper( $atts['sort_order'] ), $allowed_order, true )
+			? strtoupper( $atts['sort_order'] )
+			: 'ASC';
+
+		$allowed_columns = array( 'post_title', 'menu_order', 'post_date', 'post_modified', 'ID' );
+		$instance['sort_column'] = in_array( $atts['sort_column'], $allowed_columns, true )
+			? $atts['sort_column']
+			: 'post_title';
 
 		$ew_page = new EW_Pages();
 
@@ -145,8 +197,8 @@ if ( ! function_exists( 'ew_page_list' ) ) :
 
 		foreach ( $post_types as $page ) {
 			$object        = new stdClass();
-			$object->label = $page->labels->singular_name;
-			$object->value = $page->name;
+			$object->label = sanitize_text_field( $page->labels->singular_name );
+			$object->value = sanitize_key( $page->name );
 			$page_list[]   = $object;
 		}
 

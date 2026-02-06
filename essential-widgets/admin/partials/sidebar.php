@@ -1,3 +1,10 @@
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+?>
+
 <div class="catchp-widget-sidebar" id="sidebar-container">
 	<div id="sidebar">
 		<div class="catch-sidebar-title highlighted"><?php esc_html_e( 'Recommendations', 'essential-widgets' ); ?></div>

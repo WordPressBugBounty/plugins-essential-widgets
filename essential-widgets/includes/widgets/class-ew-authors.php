@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
 /**
  * Custom Author Widget
  *
@@ -24,8 +28,8 @@ if (!class_exists('EW_Authors')) :
 		public function __construct()
 		{
 
-			// Set up the defaults.
-			$topic_count_text = _n_noop('%s topic', '%s topics', 'essential-widgets');
+			// Translators: %s is the number of topics.
+			$topic_count_text = _n_noop( '%s topic', '%s topics', 'essential-widgets' );
 
 			// Set up defaults.
 			$this->defaults = array(
@@ -108,7 +112,7 @@ if (!class_exists('EW_Authors')) :
 				<label>
 					<?php esc_html_e('Order:', 'essential-widgets'); ?>
 
-					<select class="widefat" id="<?php echo esc_attr($this->get_field_id('order')); ?>" name="<?php esc_attr($this->get_field_name('order')); ?>">
+					<select class="widefat" id="<?php echo esc_attr($this->get_field_id('order')); ?>" name="<?php echo esc_attr($this->get_field_name('order')); ?>">
 
 						<?php foreach ($order as $option_value => $option_label) : ?>
 
@@ -174,8 +178,8 @@ if (!class_exists('EW_Authors')) :
 			</p>
 
 			<p class="button-primary ect-toggle-btn more">
-				<span class="ect-more-text"><?php esc_html_e( 'More Options', 'essential-widgets-pro' ); ?><i class="dashicons dashicons-arrow-down"></i></span>
-				<span class="ect-hide-text"><?php esc_html_e( 'Hide Options', 'essential-widgets-pro' ); ?><i class="dashicons dashicons-arrow-up"></i></span>
+				<span class="ect-more-text"><?php esc_html_e( 'More Options', 'essential-widgets' ); ?><i class="dashicons dashicons-arrow-down"></i></span>
+				<span class="ect-hide-text"><?php esc_html_e( 'Hide Options', 'essential-widgets' ); ?><i class="dashicons dashicons-arrow-up"></i></span>
 
 			<div class="advanced-section">
 
@@ -257,7 +261,7 @@ if (!class_exists('EW_Authors')) :
 			$instance['title'] = sanitize_text_field($new_instance['title']);
 
 			// Strip tags.
-			$instance['feed']  = strip_tags($new_instance['feed']);
+			$instance['feed'] = wp_strip_all_tags( $new_instance['feed'] );
 
 			// Whitelist options.
 			$order     = array('ASC', 'DESC');
@@ -293,50 +297,73 @@ if (!class_exists('EW_Authors')) :
 
 		public function widget($args, $instance)
 		{
-			// Set the $args for wp_list_authors() to the $instance array.
-			$instance = wp_parse_args($instance, $this->defaults);
+			// Merge instance with defaults.
+			$instance = wp_parse_args( $instance, $this->defaults );
 
-			// Output the args's $before_widget wrapper.
-			echo $args['before_widget'];
+			// Escape widget wrapper attributes.
+			echo wp_kses_post( $args['before_widget'] );
 
-			// If a title was input by the user, display it.
-			if (!empty($instance['title']))
-				echo $args['before_title'] . apply_filters('widget_title', $instance['title'], $instance, $this->id_base) . $args['after_title'];
+			// If a title was input by the user, display it safely.
+			if ( ! empty( $instance['title'] ) ) {
+				echo wp_kses_post( $args['before_title'] );
 
-			echo $this->shortcode($instance);
+				// Apply filters to title, then escape it for output
+				$title = apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base );
+				echo esc_html( $title );
 
-			// Close the args's widget wrapper.
-			echo $args['after_widget'];
-		}
-
-		public function shortcode($atts)
-		{
-			// instance the $echo argument and set it to false.
-
-			$atts['echo'] = false;
-
-			$ew_author = '';
-			
-			// Only show this title in block element and not on widget.
-			if ( isset( $atts['is_block'] ) && true === $atts['is_block'] && !empty( $atts['title'] ) ) {
-				$ew_author .= '<h2 class="ew-author-block-title">' . $atts['title'] . '</h2>';
+				echo wp_kses_post( $args['after_title'] );
 			}
 
-			// Get the authors list.
-			$authors = str_replace(array("\r", "\n", "\t"), '', wp_list_authors($atts));
+			// Output the main content of the widget (shortcode output)
+			echo wp_kses_post( $this->shortcode( $instance ) );
 
-			$authors = str_replace('</a> (', '</a> <span>(', $authors);
-			$authors = str_replace(')', ')</span>', $authors);
+			// Close the widget wrapper safely.
+			echo wp_kses_post( $args['after_widget'] );
+		}
 
-			// If 'list' is the style and the output should be HTML, wrap the authors in a <ul>.
-			if ('list' == $atts['style'] && $atts['html'])
-				$ew_author .= '<ul class="authors">' . $authors . '</ul><!-- .xoxo .authors -->';
+		public function shortcode( $atts )
+		{
 
-			// If 'none' is the style and the output should be HTML, wrap the authors in a <p>.
-			elseif ('none' == $atts['style'] && $atts['html'])
-				$ew_author .= '<p class="authors">' . $authors . '</p><!-- .authors -->';
+			$atts = wp_parse_args( $atts, $this->defaults );
 
-			// Display the authors list.
+			// Normalize arguments
+			$args = array();
+
+			$args['order']     = in_array( $atts['order'], array( 'ASC', 'DESC' ), true ) ? $atts['order'] : 'ASC';
+			$args['orderby']   = sanitize_key( $atts['orderby'] );
+			$args['number']    = absint( $atts['number'] );
+			$args['include']   = preg_replace( '/[^0-9,]/', '', $atts['include'] );
+			$args['exclude']   = preg_replace( '/[^0-9,]/', '', $atts['exclude'] );
+			$args['html']      = (bool) $atts['html'];
+			$args['echo']      = false;
+			$args['optioncount']   = (bool) $atts['optioncount'];
+			$args['exclude_admin'] = (bool) $atts['exclude_admin'];
+			$args['show_fullname'] = (bool) $atts['show_fullname'];
+			$args['hide_empty']    = (bool) $atts['hide_empty'];
+			$args['feed']          = sanitize_text_field( $atts['feed'] );
+			$args['feed_type']     = sanitize_text_field( $atts['feed_type'] );
+			$args['feed_image']    = esc_url( $atts['feed_image'] );
+
+			$ew_author = '';
+
+			// Block-only title
+			if ( isset( $atts['is_block'] ) && true === $atts['is_block'] && ! empty( $atts['title'] ) ) {
+				$ew_author .= '<h2 class="ew-author-block-title">' . esc_html( $atts['title'] ) . '</h2>';
+			}
+
+			// Get authors HTML safely
+			$authors = wp_list_authors( $args );
+			$authors = str_replace( array( "\r", "\n", "\t" ), '', $authors );
+
+			$authors = str_replace( '</a> (', '</a> <span>(', $authors );
+			$authors = str_replace( ')', ')</span>', $authors );
+
+			// Wrap output
+			if ( 'list' === $atts['style'] && $args['html'] ) {
+				$ew_author .= '<ul class="authors">' . wp_kses_post( $authors ) . '</ul>';
+			} elseif ( 'none' === $atts['style'] && $args['html'] ) {
+				$ew_author .= '<p class="authors">' . wp_kses_post( $authors ) . '</p>';
+			}
 
 			return $ew_author;
 		}

@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
 // Hook the post rendering to the block
 if ( function_exists( 'register_block_type' ) ) :
 	register_block_type(
@@ -78,25 +82,83 @@ endif;
 
 if ( ! function_exists( 'ew_author_render_shortcode' ) ) :
 	add_shortcode( 'ew-author', 'ew_author_render_shortcode' );
+
 	function ew_author_render_shortcode( $atts ) {
-		$instance['title']         = isset( $atts['title'] ) && 'Authors' === $atts['title']
+
+		$atts = shortcode_atts(
+			array(
+				'title'         => 'Authors',
+				'order'         => 'ASC',
+				'orderby'       => 'display_name',
+				'number'        => 5,
+				'include'       => '',
+				'exclude'       => '',
+				'optioncount'   => false,
+				'exclude_admin' => false,
+				'show_fullname' => false,
+				'hide_empty'    => true,
+				'style'         => 'list',
+				'html'          => true,
+				'feed'          => '',
+				'feed_type'     => '',
+				'feed_image'    => '',
+				'is_block'      => true,
+			),
+			$atts,
+			'ew-author'
+		);
+
+		$instance = array();
+
+		// Title
+		$instance['title'] = ( 'Authors' === $atts['title'] )
 			? esc_html__( 'Authors', 'essential-widgets' )
-			: $atts['title'];
-		$instance['order']         = $atts['order'];
-		$instance['orderby']       = $atts['orderby'];
-		$instance['number']        = $atts['number'];
-		$instance['include']       = $atts['include'];
-		$instance['exclude']       = $atts['exclude'];
-		$instance['optioncount']   = $atts['optioncount'];
-		$instance['exclude_admin'] = $atts['exclude_admin'];
-		$instance['show_fullname'] = $atts['show_fullname'];
-		$instance['hide_empty']    = $atts['hide_empty'];
-		$instance['style']         = $atts['style'];
-		$instance['html']          = $atts['html'];
-		$instance['feed']          = $atts['feed'];
-		$instance['feed_type']     = $atts['feed_type'];
-		$instance['feed_image']    = $atts['feed_image'];
-		$instance['is_block']      = $atts['is_block'];
+			: sanitize_text_field( $atts['title'] );
+
+		// Whitelist order
+		$allowed_order = array( 'ASC', 'DESC' );
+		$instance['order'] = in_array( strtoupper( $atts['order'] ), $allowed_order, true )
+			? strtoupper( $atts['order'] )
+			: 'ASC';
+
+		// Whitelist orderby
+		$allowed_orderby = array(
+			'display_name',
+			'user_login',
+			'user_nicename',
+			'user_email',
+			'ID',
+			'post_count',
+		);
+		$instance['orderby'] = in_array( $atts['orderby'], $allowed_orderby, true )
+			? $atts['orderby']
+			: 'display_name';
+
+		// Numbers
+		$instance['number'] = absint( $atts['number'] );
+
+		// Allow only IDs (numbers + commas)
+		$instance['include'] = preg_replace( '/[^0-9,]/', '', sanitize_text_field( $atts['include'] ) );
+		$instance['exclude'] = preg_replace( '/[^0-9,]/', '', sanitize_text_field( $atts['exclude'] ) );
+
+		// Booleans
+		$instance['optioncount']   = (bool) $atts['optioncount'];
+		$instance['exclude_admin'] = (bool) $atts['exclude_admin'];
+		$instance['show_fullname'] = (bool) $atts['show_fullname'];
+		$instance['hide_empty']    = (bool) $atts['hide_empty'];
+		$instance['html']          = (bool) $atts['html'];
+		$instance['is_block']      = (bool) $atts['is_block'];
+
+		// Style whitelist
+		$allowed_styles = array( 'list', 'dropdown' );
+		$instance['style'] = in_array( $atts['style'], $allowed_styles, true )
+			? $atts['style']
+			: 'list';
+
+		// Feed fields
+		$instance['feed']       = sanitize_text_field( $atts['feed'] );
+		$instance['feed_type']  = sanitize_text_field( $atts['feed_type'] );
+		$instance['feed_image'] = sanitize_text_field( $atts['feed_image'] );
 
 		$ew_author = new EW_Authors();
 

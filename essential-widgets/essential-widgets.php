@@ -16,7 +16,7 @@
  * Plugin Name:       Essential Widgets
  * Plugin URI:        https://catchplugins.com/plugins/essential-widgets/
  * Description:       Essential Widgets is a WordPress plugin for widgets that allows you to create and add amazing widgets with high customization option on your website without affecting your wallet.
- * Version:           2.2.2
+ * Version:           3.0.1
  * Author:            Catch Plugins
  * Author URI:        https://catchplugins.com/
  * License:           GPL-2.0+
@@ -31,7 +31,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 // Define Version
-define( 'ESSENTIAL_WIDGETS_VERSION', '2.2.2' );
+define( 'ESSENTIAL_WIDGETS_VERSION', '3.0.1' );
 
 /**
  * The code that runs during plugin activation.
@@ -52,13 +52,23 @@ if ( ! defined( 'ESSENTIAL_WIDGETS_PATH' ) ) {
 if ( ! defined( 'ESSENTIAL_WIDGETS_BASENAME' ) ) {
 	define( 'ESSENTIAL_WIDGETS_BASENAME', plugin_basename( __FILE__ ) );
 }
-function activate_essential_widgets() {
+
+function essential_widgets_activate() {
 	$required = 'essential-widgets-pro/essential-widgets-pro.php';
 	if ( is_plugin_active( $required ) ) {
-		$message = esc_html__( 'Sorry, Pro version is already active. No need to activate Free version. If you still want to activate the Free version, please deactivate the Pro version first. %1$s&laquo; Return to Plugins%2$s.', 'essential-widgets' );
-		$message = sprintf( $message, '<br><a href="' . esc_url( admin_url( 'plugins.php' ) ) . '">', '</a>' );
-		wp_die( $message );
+		// Translators: %1$s and %2$s wrap the "Return to Plugins" link. The message informs the user that the Pro version is active.
+		$message = __( 'Sorry, Pro version is already active. No need to activate Free version. If you still want to activate the Free version, please deactivate the Pro version first. %1$s&laquo; Return to Plugins%2$s.', 'essential-widgets' );
+
+		$message = sprintf(
+			$message,
+			'<br><a href="' . esc_url( admin_url( 'plugins.php' ) ) . '">',
+			'</a>'
+		);
+
+		// Escape all HTML output before printing
+		wp_die( wp_kses_post( $message ) );
 	}
+
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-essential-widgets-activator.php';
 	Essential_Widgets_Activator::activate();
 }
@@ -67,13 +77,13 @@ function activate_essential_widgets() {
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-essential-widgets-deactivator.php
  */
-function deactivate_essential_widgets() {
+function essential_widgets_deactivate() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-essential-widgets-deactivator.php';
 	Essential_Widgets_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_essential_widgets' );
-register_deactivation_hook( __FILE__, 'deactivate_essential_widgets' );
+register_activation_hook( __FILE__, 'essential_widgets_activate' );
+register_deactivation_hook( __FILE__, 'essential_widgets_deactivate' );
 
 /**
  * The core plugin class that is used to define internationalization,
@@ -145,13 +155,13 @@ endif;
  *
  * @since    1.0.0
  */
-function run_essential_widgets() {
+function essential_widgets_run() {
 
 	$plugin = new Essential_Widgets();
 	$plugin->run();
 
 }
-run_essential_widgets();
+essential_widgets_run();
 
 /* CTP tabs removal options */
 require plugin_dir_path( __FILE__ ) . 'includes/ctp-tabs-removal.php';

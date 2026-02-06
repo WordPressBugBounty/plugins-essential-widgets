@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
 /**
  * Custom Category Widget
  *
@@ -99,14 +103,13 @@ if ( ! class_exists( 'EW_Categories' ) ) :
 			<p>
 				<label>
 					<?php esc_html_e( 'Title:', 'essential-widgets' ); ?>
-					<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" placeholder="<?php echo esc_attr( $this->defaults['title'] ); ?>" />
+					<input type="text" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" placeholder="<?php echo esc_attr( $this->defaults['title'] ); ?>" />
 				</label>
 			</p>
 
 			<p>
 				<label>
 					<?php esc_html_e( 'Taxonomy:', 'essential-widgets' ); ?>
-
 					<select class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'taxonomy' ) ); ?>">
 
 						<?php foreach ( $taxonomies as $taxonomy ) : ?>
@@ -114,7 +117,6 @@ if ( ! class_exists( 'EW_Categories' ) ) :
 							<option value="<?php echo esc_attr( $taxonomy->name ); ?>" <?php selected( $instance['taxonomy'], $taxonomy->name ); ?>><?php echo esc_html( $taxonomy->labels->singular_name ); ?></option>
 
 						<?php endforeach; ?>
-
 					</select>
 				</label>
 			</p>
@@ -196,8 +198,8 @@ if ( ! class_exists( 'EW_Categories' ) ) :
 			</p>
 
 			<p class="button-primary ect-toggle-btn more">
-				<span class="ect-more-text"><?php esc_html_e( 'More Options', 'essential-widgets-pro' ); ?><i class="dashicons dashicons-arrow-down"></i></span>
-				<span class="ect-hide-text"><?php esc_html_e( 'Hide Options', 'essential-widgets-pro' ); ?><i class="dashicons dashicons-arrow-up"></i></span>
+				<span class="ect-more-text"><?php esc_html_e( 'More Options', 'essential-widgets' ); ?><i class="dashicons dashicons-arrow-down"></i></span>
+				<span class="ect-hide-text"><?php esc_html_e( 'Hide Options', 'essential-widgets' ); ?><i class="dashicons dashicons-arrow-up"></i></span>
 
 			<div class="advanced-section">
 
@@ -308,8 +310,8 @@ if ( ! class_exists( 'EW_Categories' ) ) :
 			$instance['title'] = sanitize_text_field( $new_instance['title'] );
 
 			// Strip tags.
-			$instance['search'] = strip_tags( $new_instance['search'] );
-			$instance['feed']   = strip_tags( $new_instance['feed'] );
+			$instance['search'] = wp_strip_all_tags( $new_instance['search'] );
+			$instance['feed']   = wp_strip_all_tags( $new_instance['feed'] );
 
 			// Whitelist options.
 			$order     = array( 'ASC', 'DESC' );
@@ -347,21 +349,28 @@ if ( ! class_exists( 'EW_Categories' ) ) :
 		}
 
 		public function widget( $args, $instance ) {
-			// Set the $args for wp_list_categories() to the $instance array.
+			// Merge instance with defaults.
 			$instance = wp_parse_args( $instance, $this->defaults );
 
-			// Output the args's $before_widget wrapper.
-			echo $args['before_widget'];
+			// Escape widget wrapper attributes.
+				echo wp_kses_post( $args['before_widget'] );
 
-			// If a title was input by the user, display it.
+			// If a title was input by the user, display it safely.
 			if ( ! empty( $instance['title'] ) ) {
-				echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base ) . $args['after_title'];
+				echo wp_kses_post( $args['before_title'] );
+
+				// Apply filters to title, then escape it for output
+				$title = apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base );
+				echo esc_html( $title );
+
+				echo wp_kses_post( $args['after_title'] );
 			}
 
-			echo $this->shortcode( $instance );
+			// Output the main content of the widget (shortcode output)
+			echo wp_kses_post( $this->shortcode( $instance ) );
 
-			// Close the args's widget wrapper.
-			echo $args['after_widget'];
+			// Close the widget wrapper safely.
+			echo wp_kses_post( $args['after_widget'] );
 		}
 
 		public function shortcode( $atts ) {
@@ -379,7 +388,7 @@ if ( ! class_exists( 'EW_Categories' ) ) :
 
 			// Only show this title in block element and not on widget.
 			if ( isset( $atts['is_block'] ) && true === $atts['is_block'] && !empty( $atts['title'] ) ) {
-				$ew_categories .= '<h2 class="ew-category-block-title">' . $atts['title'] . '</h2>';
+				$ew_categories .= '<h2 class="ew-category-block-title">' . esc_html( $atts['title'] ) . '</h2>';
 			}
 
 			// If 'list' is the user-selected style, wrap the categories in an unordered list.

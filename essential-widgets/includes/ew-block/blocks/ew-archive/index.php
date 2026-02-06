@@ -1,6 +1,9 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
 
-// Hook the post rendering to the block
+// Register block and shortcode
 if ( function_exists( 'register_block_type' ) ) :
 	register_block_type(
 		'ew-block/ew-archive',
@@ -52,19 +55,32 @@ if ( function_exists( 'register_block_type' ) ) :
 	);
 endif;
 
+// Shortcode callback
 if ( ! function_exists( 'ew_archive_render_shortcode' ) ) :
 	add_shortcode( 'ew-archive', 'ew_archive_render_shortcode' );
 	function ew_archive_render_shortcode( $atts ) {
-		$instance['title']           = $atts['title'];
-		$instance['limit']           = $atts['limit'];
-		$instance['type']            = $atts['type'];
-		$instance['post_type']       = $atts['post_type'];
-		$instance['order']           = $atts['order'];
-		$instance['format']          = $atts['format'];
-		$instance['before']          = $atts['before'];
-		$instance['after']           = $atts['after'];
-		$instance['show_post_count'] = $atts['show_post_count'];
-		$instance['is_block']        = $atts['is_block'];
+		// Sanitize all attributes
+		$instance = array(
+			'title'           => sanitize_text_field( $atts['title'] ?? '' ),
+			'limit'           => intval( $atts['limit'] ?? 10 ),
+			'type'            => sanitize_key( $atts['type'] ?? 'monthly' ),
+			'post_type'       => sanitize_key( $atts['post_type'] ?? 'post' ),
+			'order'           => sanitize_key( $atts['order'] ?? 'asc' ),
+			'format'          => sanitize_key( $atts['format'] ?? 'html' ),
+			'before'          => wp_kses_post( $atts['before'] ?? '' ),
+			'after'           => wp_kses_post( $atts['after'] ?? '' ),
+			'show_post_count' => ! empty( $atts['show_post_count'] ) ? 1 : 0,
+			'is_block'        => ! empty( $atts['is_block'] ) ? true : false,
+		);
+
+		// Whitelist options
+		$allowed_types   = array( 'alpha', 'daily', 'monthly', 'postbypost', 'weekly', 'yearly' );
+		$allowed_orders  = array( 'ASC', 'DESC', 'asc', 'desc' );
+		$allowed_formats = array( 'custom', 'html', 'option' );
+
+		$instance['type']   = in_array( $instance['type'], $allowed_types, true ) ? $instance['type'] : 'monthly';
+		$instance['order']  = in_array( $instance['order'], $allowed_orders, true ) ? $instance['order'] : 'asc';
+		$instance['format'] = in_array( $instance['format'], $allowed_formats, true ) ? $instance['format'] : 'html';
 
 		$ew_archive = new EW_Archives();
 

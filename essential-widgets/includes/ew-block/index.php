@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
 if (!class_exists('EW_Blocks')) :
 
 	class EW_Blocks
@@ -23,7 +27,7 @@ if (!class_exists('EW_Blocks')) :
 						array(
 							array(
 								'slug'  => 'ew-block',
-								'title' => __('EW Blocks', 'catch-blocks'),
+								'title' => __('EW Blocks', 'essential-widgets'),
 							),
 						)
 					);

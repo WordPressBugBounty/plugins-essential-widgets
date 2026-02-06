@@ -1,6 +1,10 @@
 <?php
 
-// Set up the defaults.
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
+// Translators: %s is the number of topics.
 $topic_count_text = _n_noop( '%s topic', '%s topics', 'essential-widgets' );
 
 // Hook the post rendering to the block
@@ -117,7 +121,7 @@ if ( ! function_exists( 'ew_tags_render_shortcode' ) && class_exists( 'EW_Tags' 
 	function ew_tags_render_shortcode( $atts ) {
 		$instance['title']         = isset( $atts['title'] ) && 'Tags' === $atts['title']
 			? esc_html__( 'Tags', 'essential-widgets' )
-			: $atts['title'];
+			: sanitize_text_field( $atts['title'] );
 		$instance['order']                      = $atts['order'];
 		$instance['orderby']                    = $atts['orderby'];
 		$instance['format']                     = $atts['format'];

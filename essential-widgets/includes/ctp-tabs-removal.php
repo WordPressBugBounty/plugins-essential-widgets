@@ -1,4 +1,9 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
 /**
  * ctp_register_settings
  * CTP Register Settings
@@ -48,33 +53,45 @@ if ( ! function_exists( 'ctp_default_options' ) ) {
 
 if ( ! function_exists( 'ctp_switch' ) ) {
 	/**
-	 * Return $string
+	 * AJAX switch handler
 	 *
 	 * @since     1.3
-	 * @return    $string    1 or 2.
 	 */
 	function ctp_switch() {
-		if ( ! wp_verify_nonce( $_POST['security'], 'ew_switch_tabs_nonce' ) ) {
-			wp_die( esc_html__( 'Unauthorized access!', 'essential-widgets' ) );
-		} else {
-			if ( ! current_user_can( 'manage_options' ) ) {
-				wp_die( esc_html__( 'Permission denied!', 'essential-widgets' ) );
-			}
-			$value = ( 'true' == $_POST['value'] ) ? 1 : 0;
 
-			$option_name = $_POST['option_name'];
-
-			$option_value = ctp_get_options();
-
-			$option_value[ $option_name ] = $value;
-
-			if ( update_option( 'ctp_options', $option_value ) ) {
-				echo $value;
-			} else {
-				esc_html_e( 'Connection Error. Please try again.', 'essential-widgets' );
-			}
+		// Required fields check
+		if ( ! isset( $_POST['security'], $_POST['value'], $_POST['option_name'] ) ) {
+			wp_die( esc_html__( 'Invalid request.', 'essential-widgets' ) );
 		}
-		wp_die(); // this is required to terminate immediately and return a proper response
+
+		// Sanitize & verify nonce
+		$nonce = sanitize_text_field( wp_unslash( $_POST['security'] ) );
+		if ( ! wp_verify_nonce( $nonce, 'ew_switch_tabs_nonce' ) ) {
+			wp_die( esc_html__( 'Unauthorized access!', 'essential-widgets' ) );
+		}
+
+		// Capability check
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'Permission denied!', 'essential-widgets' ) );
+		}
+
+		// Sanitize remaining inputs
+		$raw_value = sanitize_text_field( wp_unslash( $_POST['value'] ) );
+		$value     = ( 'true' === $raw_value ) ? 1 : 0;
+
+		$option_name = sanitize_key( wp_unslash( $_POST['option_name'] ) );
+
+		// Update option safely
+		$option_value               	= ctp_get_options();
+		$option_value[ $option_name ] 	= $value;
+
+		if ( update_option( 'ctp_options', $option_value ) ) {
+			echo esc_html( (string) $value );
+		} else {
+			esc_html_e( 'Connection Error. Please try again.', 'essential-widgets' );
+		}
+
+		wp_die(); // Required for AJAX
 	}
 }
 add_action( 'wp_ajax_ctp_switch', 'ctp_switch' );

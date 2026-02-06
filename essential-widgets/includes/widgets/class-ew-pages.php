@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
 /**
  * Pages Widget
  *
@@ -208,8 +212,8 @@ if ( ! class_exists( 'EW_Pages' ) ) :
 			</p>
 
 			<p class="button-primary ect-toggle-btn more">
-				<span class="ect-more-text"><?php esc_html_e( 'More Options', 'essential-widgets-pro' ); ?><i class="dashicons dashicons-arrow-down"></i></span>
-				<span class="ect-hide-text"><?php esc_html_e( 'Hide Options', 'essential-widgets-pro' ); ?><i class="dashicons dashicons-arrow-up"></i></span>
+				<span class="ect-more-text"><?php esc_html_e( 'More Options', 'essential-widgets' ); ?><i class="dashicons dashicons-arrow-down"></i></span>
+				<span class="ect-hide-text"><?php esc_html_e( 'Hide Options', 'essential-widgets' ); ?><i class="dashicons dashicons-arrow-up"></i></span>
 
 			<div class="advanced-section">
 
@@ -312,13 +316,15 @@ if ( ! class_exists( 'EW_Pages' ) ) :
 		 * Settings to save or bool false to cancel saving
 		 */
 		public function update( $new_instance, $old_instance ) {
+			$instance = $old_instance;
+
 			// Sanitize title.
 			$instance['title'] = sanitize_text_field( $new_instance['title'] );
 
 			// Strip tags.
-			$instance['meta_key']    = strip_tags( $new_instance['meta_key'] );
-			$instance['meta_value']  = strip_tags( $new_instance['meta_value'] );
-			$instance['date_format'] = strip_tags( $new_instance['date_format'] );
+			$instance['meta_key']    = wp_strip_all_tags( $new_instance['meta_key'] );
+			$instance['meta_value']  = wp_strip_all_tags( $new_instance['meta_value'] );
+			$instance['date_format'] = wp_strip_all_tags( $new_instance['date_format'] );
 
 			// Sanitize key.
 			$instance['post_type'] = sanitize_key( $new_instance['post_type'] );
@@ -337,12 +343,18 @@ if ( ! class_exists( 'EW_Pages' ) ) :
 			$instance['link_after']  = current_user_can( 'unfiltered_html' ) ? $new_instance['link_after'] : wp_kses_post( $new_instance['link_after'] );
 
 			// Integers.
-			$instance['number']   = intval( $new_instance['number'] );
-			$instance['depth']    = absint( $new_instance['depth'] );
-			$instance['child_of'] = absint( $new_instance['child_of'] );
-			$instance['offset']   = absint( $new_instance['offset'] );
+			$instance['number'] 	= absint( $new_instance['number'] );
+			$instance['depth']    	= absint( $new_instance['depth'] );
+			$instance['child_of']	= absint( $new_instance['child_of'] );
+			$instance['offset']		= absint( $new_instance['offset'] );
 
-			// Only allow integers and commas.
+			// Sanitize text field
+			$instance['include']      = sanitize_text_field( $new_instance['include'] );
+			$instance['exclude']      = sanitize_text_field( $new_instance['exclude'] );
+			$instance['exclude_tree'] = sanitize_text_field( $new_instance['exclude_tree'] );
+			$instance['authors']      = sanitize_text_field( $new_instance['authors'] );
+
+			// Then restrict to numbers & commas
 			$instance['include']      = preg_replace( '/[^0-9,]/', '', $new_instance['include'] );
 			$instance['exclude']      = preg_replace( '/[^0-9,]/', '', $new_instance['exclude'] );
 			$instance['exclude_tree'] = preg_replace( '/[^0-9,]/', '', $new_instance['exclude_tree'] );
@@ -362,21 +374,28 @@ if ( ! class_exists( 'EW_Pages' ) ) :
 		 * $instance The settings for the particular instance of the widget
 		 */
 		public function widget( $args, $instance ) {
-			// Set the $args for wp_list_pages() to the $instance array.
+			// Merge instance with defaults.
 			$instance = wp_parse_args( $instance, $this->defaults );
 
-			// Output the args's $before_widget wrapper.
-			echo $args['before_widget'];
+			// Escape widget wrapper attributes.
+			echo wp_kses_post( $args['before_widget'] );
 
-			// If a title was input by the user, display it.
+			// If a title was input by the user, display it safely.
 			if ( ! empty( $instance['title'] ) ) {
-				echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base ) . $args['after_title'];
+				echo wp_kses_post( $args['before_title'] );
+
+				// Apply filters to title, then escape it for output
+				$title = apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base );
+				echo esc_html( $title );
+
+				echo wp_kses_post( $args['after_title'] );
 			}
 
-			echo $this->shortcode( $instance );
+			// Output the main content of the widget (shortcode output)
+			echo wp_kses_post( $this->shortcode( $instance ) );
 
-			// Close the args's widget wrapper.
-			echo $args['after_widget'];
+			// Close the widget wrapper safely.
+			echo wp_kses_post( $args['after_widget'] );
 		}
 
 		public function shortcode( $atts ) {
@@ -385,16 +404,20 @@ if ( ! class_exists( 'EW_Pages' ) ) :
 			$atts['echo']     = false;
 
 			$ew_pages = '';
-			
+
 			// Only show this title in block element and not on widget.
 			if ( isset( $atts['is_block'] ) && true === $atts['is_block'] && !empty( $atts['title'] ) ) {
-				$ew_pages .= '<h2 class="ew-page-block-title">' . $atts['title'] . '</h2>';
+				$ew_pages .= '<h2 class="ew-page-block-title">' . esc_html( $atts['title'] ) . '</h2>';
 			}
 
 			// Output the page list.
-			$ew_pages .= '<ul class="pages">' . str_replace( array( "\r", "\n", "\t" ), '', wp_list_pages( $atts ) ) . '</ul>';
+			$ew_pages .= '<ul class="pages">' . str_replace(
+				array( "\r", "\n", "\t" ),
+				'',
+				wp_list_pages( $atts )
+			) . '</ul>';
 
-			return $ew_pages;
+			return wp_kses_post( $ew_pages );
 		}
 	}
 endif;

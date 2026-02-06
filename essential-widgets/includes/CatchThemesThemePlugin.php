@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
 class CatchThemesThemePlugin {
 	public function __construct() {
 		remove_action( 'wp_ajax_query-themes', array( $this, 'wp_ajax_query_themes' ), 1 );
@@ -32,18 +36,33 @@ class CatchThemesThemePlugin {
 	public function wp_ajax_custom_query_themes() {
 		global $themes_allowedtags, $theme_field_defaults;
 
+		// Capability check
 		if ( ! current_user_can( 'install_themes' ) ) {
 			wp_send_json_error();
 		}
 
+		// Nonce verification
+		check_ajax_referer( 'ew_query_themes_nonce', 'nonce' );
+
+		// Copy superglobal ONCE
+		$post_data = wp_unslash( $_POST );
+
+		// Now sanitize
+		$post_data = map_deep( $post_data, 'sanitize_text_field' );
+
+		// From this point on, DO NOT use $_POST again
+		if ( empty( $post_data['request'] ) || ! is_array( $post_data['request'] ) ) {
+			wp_send_json_error();
+		}
+
 		$args = wp_parse_args(
-			wp_unslash( $_REQUEST['request'] ),
+			$post_data['request'],
 			array(
 				'per_page' => 20,
 				'fields'   => array_merge(
 					(array) $theme_field_defaults,
 					array(
-						'reviews_url' => true, // Explicitly request the reviews URL to be linked from the Add Themes screen.
+						'reviews_url' => true,
 					)
 				),
 			)
@@ -54,16 +73,8 @@ class CatchThemesThemePlugin {
 			unset( $args['browse'] );
 		}
 
-		if ( isset( $args['browse'] ) && 'favorites' === $args['browse'] && ! isset( $args['user'] ) ) {
-			$user = get_user_option( 'wporg_favorites' );
-			if ( $user ) {
-				$args['user'] = $user;
-			}
-		}
-
 		$old_filter = isset( $args['browse'] ) ? $args['browse'] : 'search';
 
-		/** This filter is documented in wp-admin/includes/class-wp-theme-install-list-table.php */
 		$args = apply_filters( 'install_themes_table_api_args_' . $old_filter, $args );
 
 		$api = themes_api( 'query_themes', $args );
@@ -72,66 +83,11 @@ class CatchThemesThemePlugin {
 			wp_send_json_error();
 		}
 
-		$update_php = network_admin_url( 'update.php?action=install-theme' );
 		foreach ( $api->themes as &$theme ) {
-			$theme->install_url = add_query_arg(
-				array(
-					'theme'    => $theme->slug,
-					'_wpnonce' => wp_create_nonce( 'install-theme_' . $theme->slug ),
-				),
-				$update_php
-			);
-
-			if ( current_user_can( 'switch_themes' ) ) {
-				if ( is_multisite() ) {
-					$theme->activate_url = add_query_arg(
-						array(
-							'action'   => 'enable',
-							'_wpnonce' => wp_create_nonce( 'enable-theme_' . $theme->slug ),
-							'theme'    => $theme->slug,
-						),
-						network_admin_url( 'themes.php' )
-					);
-				} else {
-					$theme->activate_url = add_query_arg(
-						array(
-							'action'     => 'activate',
-							'_wpnonce'   => wp_create_nonce( 'switch-theme_' . $theme->slug ),
-							'stylesheet' => $theme->slug,
-						),
-						admin_url( 'themes.php' )
-					);
-				}
-			}
-
-			if ( ! is_multisite() && current_user_can( 'edit_theme_options' ) && current_user_can( 'customize' ) ) {
-				$theme->customize_url = add_query_arg(
-					array(
-						'return' => urlencode( network_admin_url( 'theme-install.php', 'relative' ) ),
-					),
-					wp_customize_url( $theme->slug )
-				);
-			}
-
 			$theme->name        = wp_kses( $theme->name, $themes_allowedtags );
 			$theme->author      = wp_kses( $theme->author['display_name'], $themes_allowedtags );
 			$theme->version     = wp_kses( $theme->version, $themes_allowedtags );
 			$theme->description = wp_kses( $theme->description, $themes_allowedtags );
-
-			$theme->stars = wp_star_rating(
-				array(
-					'rating' => $theme->rating,
-					'type'   => 'percent',
-					'number' => $theme->num_ratings,
-					'echo'   => false,
-				)
-			);
-
-			$theme->num_ratings    = number_format_i18n( $theme->num_ratings );
-			$theme->preview_url    = set_url_scheme( $theme->preview_url );
-			$theme->compatible_wp  = is_wp_version_compatible( $theme->requires );
-			$theme->compatible_php = is_php_version_compatible( $theme->requires_php );
-
 		}
 
 		wp_send_json_success( $api );
@@ -151,7 +107,7 @@ class CatchThemesThemePlugin {
 				$wp_customize,
 				'catchthemes',
 				array(
-					'title'      => __( 'Themes by CatchThemes', 'catch-themes-demo-import' ),
+					'title'      => __( 'Themes by CatchThemes', 'essential-widgets' ),
 					'action'     => 'catchthemes',
 					'capability' => 'install_themes',
 					'panel'      => 'themes',
@@ -427,14 +383,13 @@ class CatchThemesThemePlugin {
 		wp_send_json_success( $themes );
 	}
 
-	/* Plugins */
-	/* Adds Catch Plugins tab in Add Plugin page to show all plugins by Catch Plugins in wordpress.org */
 	public function add_our_plugins_tab( $tabs ) {
-		// Add our filter here
-		$tabs['catchplugins'] = _x( 'Catch Plugins', 'Plugin Installer' );
+		// Translators: Tab label in the Plugin Installer for listing Catch Plugins.
+		$tabs['catchplugins'] = _x( 'Catch Plugins', 'Plugin Installer', 'essential-widgets' );
 
 		return $tabs;
 	}
+
 
 	public function catchplugins() {
 		/* From CORE Start */
@@ -470,8 +425,12 @@ class CatchThemesThemePlugin {
 	public function plugins_table() {
 		global $wp_list_table;
 		printf(
-			'<p class="catch-plugins-list">' . __( 'You can use any of our free plugins or premium plugins from <a href="%s" target="_blank">Catch Plugins</a>' ) . '.</p>',
-			'https://catchplugins.com/'
+			'<p class="catch-plugins-list">%s</p>',
+			sprintf(
+				// Translators: %s is the URL to the Catch Plugins website.
+				wp_kses_post( __( 'You can use any of our free plugins or premium plugins from <a href="%s" target="_blank">Catch Plugins</a>.', 'essential-widgets' ) ),
+				esc_url( 'https://catchplugins.com/' )
+			)
 		);
 		?>
 		<form id="plugin-filter" method="post">

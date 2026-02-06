@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
 /**
  * Custom Tag Widget
  *
@@ -22,7 +26,7 @@ if ( ! class_exists( 'EW_Tags' ) ) :
 		protected $defaults;
 
 		public function __construct() {
-			// Set up the defaults.
+			// Translators: %s is the number of topics.
 			$topic_count_text = _n_noop( '%s topic', '%s topics', 'essential-widgets' );
 
 			// Set up the defaults.
@@ -135,13 +139,11 @@ if ( ! class_exists( 'EW_Tags' ) ) :
 					<?php esc_html_e( 'Display as:', 'essential-widgets' ); ?>
 
 					<select class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'format' ) ); ?>">
-
 						<?php foreach ( $format as $option_value => $option_label ) : ?>
-
-							<option value="<?php echo $option_value; ?>" <?php selected( $instance['format'], $option_value ); ?>><?php echo $option_label; ?></option>
-
+							<option value="<?php echo esc_attr( $option_value ); ?>" <?php selected( $instance['format'], $option_value ); ?>>
+								<?php echo esc_html( $option_label ); ?>
+							</option>
 						<?php endforeach; ?>
-
 					</select>
 				</label>
 			</p>
@@ -151,13 +153,11 @@ if ( ! class_exists( 'EW_Tags' ) ) :
 					<?php esc_html_e( 'Order:', 'essential-widgets' ); ?>
 
 					<select class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'order' ) ); ?>">
-
 						<?php foreach ( $order as $option_value => $option_label ) : ?>
-
-							<option value="<?php echo $option_value; ?>" <?php selected( $instance['order'], $option_value ); ?>><?php echo $option_label; ?></option>
-
+							<option value="<?php echo esc_attr( $option_value ); ?>" <?php selected( $instance['order'], $option_value ); ?>>
+								<?php echo esc_html( $option_label ); ?>
+							</option>
 						<?php endforeach; ?>
-
 					</select>
 				</label>
 			</p>
@@ -167,13 +167,11 @@ if ( ! class_exists( 'EW_Tags' ) ) :
 					<?php esc_html_e( 'Order By:', 'essential-widgets' ); ?>
 
 					<select class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'orderby' ) ); ?>">
-
 						<?php foreach ( $orderby as $option_value => $option_label ) : ?>
-
-							<option value="<?php echo $option_value; ?>" <?php selected( $instance['orderby'], $option_value ); ?>><?php echo $option_label; ?></option>
-
+							<option value="<?php echo esc_attr( $option_value ); ?>" <?php selected( $instance['orderby'], $option_value ); ?>>
+								<?php echo esc_html( $option_label ); ?>
+							</option>
 						<?php endforeach; ?>
-
 					</select>
 				</label>
 			</p>
@@ -181,13 +179,21 @@ if ( ! class_exists( 'EW_Tags' ) ) :
 			<p>
 				<label>
 					<?php esc_html_e( 'Number:', 'essential-widgets' ); ?>
-					<input type="number" class="widefat" size="5" min="0" name="<?php echo esc_attr( $this->get_field_name( 'number' ) ); ?>" value="<?php echo esc_attr( $instance['number'] ); ?>" placeholder="25" />
+					<input
+						type="number"
+						class="widefat"
+						size="5"
+						min="0"
+						name="<?php echo esc_attr( $this->get_field_name( 'number' ) ); ?>"
+						value="<?php echo esc_attr( $instance['number'] ); ?>"
+						placeholder="<?php echo esc_attr( '25' ); ?>"
+					/>
 				</label>
 			</p>
 
 			<p class="button-primary ect-toggle-btn more">
-				<span class="ect-more-text"><?php esc_html_e( 'More Options', 'essential-widgets-pro' ); ?><i class="dashicons dashicons-arrow-down"></i></span>
-				<span class="ect-hide-text"><?php esc_html_e( 'Hide Options', 'essential-widgets-pro' ); ?><i class="dashicons dashicons-arrow-up"></i></span>
+				<span class="ect-more-text"><?php esc_html_e( 'More Options', 'essential-widgets' ); ?><i class="dashicons dashicons-arrow-down"></i></span>
+				<span class="ect-hide-text"><?php esc_html_e( 'Hide Options', 'essential-widgets' ); ?><i class="dashicons dashicons-arrow-up"></i></span>
 
 			<div class="advanced-section">
 
@@ -224,16 +230,15 @@ if ( ! class_exists( 'EW_Tags' ) ) :
 						<?php esc_html_e( 'Unit:', 'essential-widgets' ); ?>
 
 						<select class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'unit' ) ); ?>">
-
 							<?php foreach ( $unit as $option_value => $option_label ) : ?>
-
-								<option value="<?php echo $option_value; ?>" <?php selected( $instance['unit'], $option_value ); ?>><?php echo $option_label; ?></option>
-
+								<option value="<?php echo esc_attr( $option_value ); ?>" <?php selected( $instance['unit'], $option_value ); ?>>
+									<?php echo esc_html( $option_label ); ?>
+								</option>
 							<?php endforeach; ?>
-
 						</select>
 					</label>
 				</p>
+
 				<p>
 					<label>
 						<?php esc_html_e( 'Separator:', 'essential-widgets' ); ?>
@@ -329,11 +334,11 @@ if ( ! class_exists( 'EW_Tags' ) ) :
 			$instance['title'] = sanitize_text_field( $new_instance['title'] );
 
 			// Strip tags.
-			$instance['separator']     = strip_tags( $new_instance['separator'] );
-			$instance['name__like']    = strip_tags( $new_instance['name__like'] );
-			$instance['search']        = strip_tags( $new_instance['search'] );
-			$instance['single_text']   = strip_tags( $new_instance['single_text'] );
-			$instance['multiple_text'] = strip_tags( $new_instance['multiple_text'] );
+			$instance['separator']     = wp_strip_all_tags( $new_instance['separator'] );
+			$instance['name__like']    = wp_strip_all_tags( $new_instance['name__like'] );
+			$instance['search']        = wp_strip_all_tags( $new_instance['search'] );
+			$instance['single_text']   = wp_strip_all_tags( $new_instance['single_text'] );
+			$instance['multiple_text'] = wp_strip_all_tags( $new_instance['multiple_text'] );
 
 			// Sanitize key.
 			$instance['taxonomy'] = array_map( 'sanitize_key', $new_instance['taxonomy'] );
@@ -374,7 +379,7 @@ if ( ! class_exists( 'EW_Tags' ) ) :
 		}
 
 		public function widget( $args, $instance ) {
-			// Set the $instance for wp_tag_cloud() to the $instance array.
+			// Merge instance with defaults.
 			$instance = wp_parse_args( $instance, $this->defaults );
 
 			// Make sure empty callbacks aren't passed for custom functions.
@@ -384,18 +389,25 @@ if ( ! class_exists( 'EW_Tags' ) ) :
 			// If the separator is empty, set it to the default new line.
 			$instance['separator'] = ! empty( $instance['separator'] ) ? $instance['separator'] : "\n";
 
-			// Output the sidebar's $before_widget wrapper.
-			echo $args['before_widget'];
+			// Escape widget wrapper attributes.
+			echo wp_kses_post( $args['before_widget'] );
 
-			// If a title was input by the user, display it.
+			// If a title was input by the user, display it safely.
 			if ( ! empty( $instance['title'] ) ) {
-				echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base ) . $args['after_title'];
+				echo wp_kses_post( $args['before_title'] );
+
+				// Apply filters to title, then escape it for output
+				$title = apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base );
+				echo esc_html( $title );
+
+				echo wp_kses_post( $args['after_title'] );
 			}
 
-			echo $this->shortcode( $instance );
+			// Output the main content of the widget (shortcode output)
+			echo wp_kses_post( $this->shortcode( $instance ) );
 
-			// Close the sidebar's widget wrapper.
-			echo $args['after_widget'];
+			// Close the widget wrapper safely.
+			echo wp_kses_post( $args['after_widget'] );
 		}
 
 		public function shortcode( $atts ) {
@@ -406,10 +418,10 @@ if ( ! class_exists( 'EW_Tags' ) ) :
 			$tags = str_replace( array( "\r", "\n", "\t" ), ' ', wp_tag_cloud( $atts ) );
 
 			$ew_tags = '';
-			
+
 			// Only show this title in block element and not on widget.
 			if ( isset( $atts['is_block'] ) && true === $atts['is_block'] && ! empty( $atts['title'] ) ) {
-				$ew_tags .= '<h2 class="ew-tags-block-title">' . $atts['title'] . '</h2>';
+				$ew_tags .= '<h2 class="ew-tags-block-title">' . $esc_html( $atts['title'] ) . '</h2>';
 			}
 
 			// If $format should be flat, wrap it in the <p> element.

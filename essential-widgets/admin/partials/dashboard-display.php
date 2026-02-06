@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
 /**
  * Provide a admin area view for the plugin
  *
@@ -32,14 +36,15 @@
                     $options = essential_widgets_get_options( 'essential_widgets_options' );
                     $widget_list = essential_widgets_list();
                     foreach ( $widget_list as $key => $value ) :
+                        $is_active = ! empty( $options[ $key ] );
                 ?>
-                    <div id="module-<?php echo $key; ?>" class="catch-modules">
-                        <div class="module-header <?php echo $options[$key] ? 'active' : 'inactive'; ?>">
-                            <h3 class="module-title"><?php echo $value; ?></h3>
+                    <div id="module-<?php echo esc_attr( $key ); ?>" class="catch-modules">
+                        <div class="module-header <?php echo $is_active ? 'active' : 'inactive'; ?>">
+                            <h3 class="module-title"><?php echo esc_html( $value ); ?></h3>
                             <div class="switch">
                                 <input type="hidden" name="ew_nonce" id="ew_nonce" value="<?php echo esc_attr( wp_create_nonce( 'ew_nonce' ) ); ?>" />
-                                <input type="checkbox" id="<?php echo $key; ?>" class="input-switch" rel="<?php echo $key; ?>" <?php checked( true, $options[$key] ); ?> >
-                                <label for="<?php echo $key; ?>"></label>
+                                <input type="checkbox" id="<?php echo esc_attr( $key ); ?>" class="input-switch" rel="<?php echo esc_attr( $key ); ?>" <?php checked( true, $is_active ); ?> >
+                                <label for="<?php echo esc_attr( $key ); ?>"></label>
                             </div>
                             <div class="loader"></div>
                         </div><!-- .module-header -->

@@ -1,3 +1,10 @@
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+?>
+
 <!-- Footer -->
 <div class="catchp-footer">
 	<div class="catchp-footer-site-info">

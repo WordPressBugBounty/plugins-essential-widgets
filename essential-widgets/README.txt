@@ -3,8 +3,8 @@ Contributors: catchplugins, catchthemes, sakinshrestha, pratikshrestha, maheshma
 Donate link: https://catchplugins.com/plugins/essential-widgets-pro/
 Tags: widgets, pages, posts, tags, categories
 Requires at least: 5.9
-Tested up to: 6.8
-Stable tag: trunk
+Tested up to: 6.9
+Stable tag: 3.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,25 @@ Not so easy way (via FTP) :
 7. Tags
 
 == Changelog ==
+
+= 3.0.1 (Released: January 26, 2026) =
+* Bug Fixed: Cross-site Scripting (Reported by Muhammad Yudha - DJ)
+
+= 3.0 (Released: January 15, 2026) =
+* Bug Fixed: Mismatched text domain
+* Bug Fixed: Missing $domain parameter in function
+* Bug Fixed: missing_direct_file_access_protection
+* Bug Fixed: Processing form data without nonce verification
+* Bug Fixed: WordPress.WP.AlternativeFunctions.strip_tags_strip_tags
+* Bug Fixed: WordPress.Security.NonceVerification.Recommended
+* Bug Fixed: WordPress.Security.EscapeOutput.OutputNotEscaped
+* Bug Fixed: WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+* Bug Fixed: WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+* Bug Fixed: WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+* Compatibility check up to version 6.9
+
+= 2.3 (Released: November 19, 2025) =
+* Bug Fixed: Cross-Site Scripting via the `title` parameter in widget shortcodes (Reported by Mdr https://patchstack.com)
 
 = 2.2.2 (Released: May 13, 2025) =
 * Bug Fixed: Translation loading

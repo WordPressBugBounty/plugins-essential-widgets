@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
 /**
  * Menus Widget
  *
@@ -116,34 +120,58 @@ if ( ! class_exists( 'EW_Menus' ) ) :
 			<p>
 				<label>
 					<?php esc_html_e( 'Container ID:', 'essential-widgets' ); ?>
-					<input type="text" class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'container_id' ) ); ?>" value="<?php echo esc_attr( $instance['container_id'] ); ?>" placeholder="<?php echo esc_html__( 'example' ); ?>" />
+					<input
+						type="text"
+						class="widefat"
+						name="<?php echo esc_attr( $this->get_field_name( 'container_id' ) ); ?>"
+						value="<?php echo esc_attr( $instance['container_id'] ); ?>"
+						placeholder="<?php echo esc_html__( 'example', 'essential-widgets' ); ?>"
+					/>
 				</label>
 			</p>
 
 			<p>
 				<label>
 					<?php esc_html_e( 'Container Class:', 'essential-widgets' ); ?>
-					<input type="text" class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'container_class' ) ); ?>" value="<?php echo esc_attr( $instance['container_class'] ); ?>" placeholder="<?php echo esc_html__( 'example' ); ?>" />
+					<input
+						type="text"
+						class="widefat"
+						name="<?php echo esc_attr( $this->get_field_name( 'container_class' ) ); ?>"
+						value="<?php echo esc_attr( $instance['container_class'] ); ?>"
+						placeholder="<?php echo esc_html__( 'example', 'essential-widgets' ); ?>"
+					/>
 				</label>
 			</p>
 
 			<p>
 				<label>
 					<?php esc_html_e( 'Menu ID:', 'essential-widgets' ); ?>
-					<input type="text" class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'menu_id' ) ); ?>" value="<?php echo esc_attr( $instance['menu_id'] ); ?>" placeholder="<?php echo esc_html__( 'example' ); ?>" />
+					<input
+						type="text"
+						class="widefat"
+						name="<?php echo esc_attr( $this->get_field_name( 'menu_id' ) ); ?>"
+						value="<?php echo esc_attr( $instance['menu_id'] ); ?>"
+						placeholder="<?php echo esc_html__( 'example', 'essential-widgets' ); ?>"
+					/>
 				</label>
 			</p>
 
 			<p>
 				<label>
 					<?php esc_html_e( 'Menu Class:', 'essential-widgets' ); ?>
-					<input type="text" class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'menu_class' ) ); ?>" value="<?php echo esc_attr( $instance['menu_class'] ); ?>" placeholder="<?php echo esc_html__( 'example' ); ?>" />
+					<input
+						type="text"
+						class="widefat"
+						name="<?php echo esc_attr( $this->get_field_name( 'menu_class' ) ); ?>"
+						value="<?php echo esc_attr( $instance['menu_class'] ); ?>"
+						placeholder="<?php echo esc_html__( 'example', 'essential-widgets' ); ?>"
+					/>
 				</label>
 			</p>
 
 			<p class="button-primary ect-toggle-btn more">
-				<span class="ect-more-text"><?php esc_html_e( 'More Options', 'essential-widgets-pro' ); ?><i class="dashicons dashicons-arrow-down"></i></span>
-				<span class="ect-hide-text"><?php esc_html_e( 'Hide Options', 'essential-widgets-pro' ); ?><i class="dashicons dashicons-arrow-up"></i></span>
+				<span class="ect-more-text"><?php esc_html_e( 'More Options', 'essential-widgets' ); ?><i class="dashicons dashicons-arrow-down"></i></span>
+				<span class="ect-hide-text"><?php esc_html_e( 'Hide Options', 'essential-widgets' ); ?><i class="dashicons dashicons-arrow-up"></i></span>
 
 			<div class="advanced-section">
 
@@ -213,7 +241,7 @@ if ( ! class_exists( 'EW_Menus' ) ) :
 			$instance['title'] = sanitize_text_field( $new_instance['title'] );
 
 			// Strip tags.
-			$instance['menu'] = strip_tags( $new_instance['menu'] );
+			$instance['menu'] = wp_strip_all_tags( $new_instance['menu'] );
 
 			// Whitelist options.
 			$container = apply_filters( 'wp_nav_menu_container_allowedtags', array( 'div', 'nav' ) );
@@ -249,21 +277,28 @@ if ( ! class_exists( 'EW_Menus' ) ) :
 		 * $instance The settings for the particular instance of the widget
 		 */
 		public function widget( $args, $instance ) {
-			// Set the $args for wp_nav_menu() to the $instance array.
+			// Merge instance with defaults.
 			$instance = wp_parse_args( $instance, $this->defaults );
 
-			// Output the sidebar's $before_widget wrapper.
-			echo $args['before_widget'];
+			// Escape widget wrapper attributes.
+			echo wp_kses_post( $args['before_widget'] );
 
-			// If a title was input by the user, display it.
+			// If a title was input by the user, display it safely.
 			if ( ! empty( $instance['title'] ) ) {
-				echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base ) . $args['after_title'];
+				echo wp_kses_post( $args['before_title'] );
+
+				// Apply filters to title, then escape it for output
+				$title = apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base );
+				echo esc_html( $title );
+
+				echo wp_kses_post( $args['after_title'] );
 			}
 
-			echo $this->shortcode( $instance );
+			// Output the main content of the widget (shortcode output)
+			echo wp_kses_post( $this->shortcode( $instance ) );
 
-			// Close the sidebar's widget wrapper.
-			echo $args['after_widget'];
+			// Close the widget wrapper safely.
+			echo wp_kses_post( $args['after_widget'] );
 		}
 
 		public function shortcode( $atts ) {
@@ -271,10 +306,10 @@ if ( ! class_exists( 'EW_Menus' ) ) :
 			$atts['echo'] = false;
 
 			$ew_menu = '';
-			
+
 			// Only show this title in block element and not on widget.
 			if ( isset( $atts['is_block'] ) && true === $atts['is_block'] && !empty( $atts['title'] ) ) {
-				$ew_menu .= '<h2 class="ew-menu-block-title">' . $atts['title'] . '</h2>';
+				$ew_menu .= '<h2 class="ew-menu-block-title">' . esc_html( $atts['title'] ) . '</h2>';
 			}
 
 			// Output the nav menu.
