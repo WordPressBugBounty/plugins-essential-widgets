@@ -3,8 +3,9 @@ Contributors: catchplugins, catchthemes, sakinshrestha, pratikshrestha, maheshma
 Donate link: https://catchplugins.com/plugins/essential-widgets-pro/
 Tags: widgets, pages, posts, tags, categories
 Requires at least: 5.9
-Tested up to: 6.9
-Stable tag: 3.0.1
+Requires PHP: 7.4
+Tested up to: 7.0
+Stable tag: 3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +75,15 @@ Not so easy way (via FTP) :
 7. Tags
 
 == Changelog ==
+
+= 3.1 (Released: May 26, 2026) =
+* Bug Fixed: PHP fatal error in Tags block — undefined variable used as callable
+* Bug Fixed: Posts widget href attribute missing quotes around URL (invalid HTML)
+* Bug Fixed: Scripts now correctly load in the footer across admin and public pages
+* Bug Fixed: Deprecated wp-editor block script dependency replaced with wp-block-editor
+* Bug Fixed: Several strings were untranslatable due to wrong or missing text domain
+* Code: Various code quality improvements (strict comparisons, output escaping, i18n)
+* Compatibility check up to version 7.0
 
 = 3.0.1 (Released: January 26, 2026) =
 * Bug Fixed: Cross-site Scripting (Reported by Muhammad Yudha - DJ)

@@ -15,7 +15,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Custom Category Widget
  */
 if ( ! class_exists( 'EW_Categories' ) ) :
-	class EW_Categories extends WP_Widget {
+	class EW_Categories extends WP_Widget // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- EW_ is this plugin's abbreviated prefix; wrapped in class_exists() guard.
+	{
 
 
 		/**
@@ -31,7 +32,7 @@ if ( ! class_exists( 'EW_Categories' ) ) :
 				'taxonomy'           => 'category',
 				'style'              => 'list',
 				'include'            => '',
-				'exclude'            => '',
+				'exclude'            => '', // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_list_categories() parameter, not a WP_Query post__not_in clause.
 				'exclude_tree'       => '',
 				'child_of'           => '',
 				'current_category'   => '',
@@ -300,7 +301,7 @@ if ( ! class_exists( 'EW_Categories' ) ) :
 		public function update( $new_instance, $old_instance ) {
 			// If new taxonomy is chosen, reset includes and excludes.
 			if ( $new_instance['taxonomy'] !== $old_instance['taxonomy'] ) {
-				$new_instance['include'] = $new_instance['exclude'] = '';
+				$new_instance['include'] = $new_instance['exclude'] = ''; // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_list_categories() parameter.
 			}
 
 			// Sanitize key.
@@ -319,10 +320,10 @@ if ( ! class_exists( 'EW_Categories' ) ) :
 			$style     = array( 'list', 'none' );
 			$feed_type = array( '', 'atom', 'rdf', 'rss', 'rss2' );
 
-			$instance['order']     = in_array( $new_instance['order'], $order ) ? $new_instance['order'] : 'ASC';
-			$instance['orderby']   = in_array( $new_instance['orderby'], $orderby ) ? $new_instance['orderby'] : 'name';
-			$instance['style']     = in_array( $new_instance['style'], $style ) ? $new_instance['style'] : 'list';
-			$instance['feed_type'] = in_array( $new_instance['feed_type'], $feed_type ) ? $new_instance['feed_type'] : '';
+			$instance['order']     = in_array( $new_instance['order'], $order, true )         ? $new_instance['order']     : 'ASC';
+			$instance['orderby']   = in_array( $new_instance['orderby'], $orderby, true )   ? $new_instance['orderby']   : 'name';
+			$instance['style']     = in_array( $new_instance['style'], $style, true )         ? $new_instance['style']     : 'list';
+			$instance['feed_type'] = in_array( $new_instance['feed_type'], $feed_type, true ) ? $new_instance['feed_type'] : '';
 
 			// Integers.
 			$instance['number']           = intval( $new_instance['number'] );
@@ -332,7 +333,7 @@ if ( ! class_exists( 'EW_Categories' ) ) :
 
 			// Only allow integers and commas.
 			$instance['include']      = preg_replace( '/[^0-9,]/', '', $new_instance['include'] );
-			$instance['exclude']      = preg_replace( '/[^0-9,]/', '', $new_instance['exclude'] );
+			$instance['exclude']      = preg_replace( '/[^0-9,]/', '', $new_instance['exclude'] ); // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_list_categories() parameter.
 			$instance['exclude_tree'] = preg_replace( '/[^0-9,]/', '', $new_instance['exclude_tree'] );
 
 			// URLs.
@@ -413,7 +414,7 @@ if ( ! function_exists( 'ew_categories_register' ) ) :
 	 *
 	 * @since 1.0.0
 	 */
-	function ew_categories_register() {
+	function ew_categories_register() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- ew_ is this plugin's abbreviated prefix.
 		register_widget( 'EW_Categories' );
 	}
 	add_action( 'widgets_init', 'ew_categories_register' );

@@ -75,7 +75,7 @@ endif;
 
 if ( ! function_exists( 'ew_menu_render_shortcode' ) ) :
 	add_shortcode( 'ew-menu', 'ew_menu_render_shortcode' );
-	function ew_menu_render_shortcode( $atts ) {
+	function ew_menu_render_shortcode( $atts ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- ew_ is this plugin's abbreviated prefix; wrapped in function_exists() guard.
 		$instance['title'] 			= isset( $atts['title'] ) && 'Navigation' === $atts['title']
     		? esc_html__( 'Navigation', 'essential-widgets' )
     		: sanitize_text_field( $atts['title'] );
@@ -107,7 +107,7 @@ if ( ! function_exists( 'ew_menu_list' ) ) :
 	 *
 	 * @return array|null Array of nav menus object with label and value pair, * or null if none.
 	 */
-	function ew_menu_list() {
+	function ew_menu_list() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- ew_ is this plugin's abbreviated prefix; wrapped in function_exists() guard.
 		$menus = wp_get_nav_menus();
 
 		$menu_list = array();

@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Custom Author Widget
  */
 if (!class_exists('EW_Authors')) :
-	class EW_Authors extends WP_Widget
+	class EW_Authors extends WP_Widget // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- EW_ is this plugin's abbreviated prefix; wrapped in class_exists() guard.
 	{
 
 		/**
@@ -38,7 +38,7 @@ if (!class_exists('EW_Authors')) :
 				'orderby'       => 'display_name',
 				'number'        => '',
 				'include'       => '',
-				'exclude'       => '',
+				'exclude'       => '', // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_list_authors() parameter, not a WP_Query post__not_in clause.
 				'optioncount'   => false,
 				'exclude_admin' => false,
 				'show_fullname' => true,
@@ -269,17 +269,17 @@ if (!class_exists('EW_Authors')) :
 			$style     = array('list', 'none');
 			$feed_type = array('', 'atom', 'rdf', 'rss', 'rss2');
 
-			$instance['order']     = in_array($new_instance['order'], $order)     ? $new_instance['order']   : 'ASC';
-			$instance['orderby']   = in_array($new_instance['orderby'], $orderby) ? $new_instance['orderby'] : 'display_name';
-			$instance['style']     = in_array($new_instance['style'], $style)     ? $new_instance['style']   : 'list';
-			$instance['feed_type'] = in_array($new_instance['feed_type'], $feed_type) ? $new_instance['feed_type'] : '';
+			$instance['order']     = in_array($new_instance['order'], $order, true)         ? $new_instance['order']     : 'ASC';
+			$instance['orderby']   = in_array($new_instance['orderby'], $orderby, true)   ? $new_instance['orderby']   : 'display_name';
+			$instance['style']     = in_array($new_instance['style'], $style, true)         ? $new_instance['style']     : 'list';
+			$instance['feed_type'] = in_array($new_instance['feed_type'], $feed_type, true) ? $new_instance['feed_type'] : '';
 
 			// Integers.
 			$instance['number'] = intval($new_instance['number']);
 
 			// Only allow integers and commas.
 			$instance['include'] = preg_replace('/[^0-9,]/', '', $new_instance['include']);
-			$instance['exclude'] = preg_replace('/[^0-9,]/', '', $new_instance['exclude']);
+			$instance['exclude'] = preg_replace('/[^0-9,]/', '', $new_instance['exclude']); // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_list_authors() parameter, not a WP_Query post__not_in clause.
 
 			// URLs.
 			$instance['feed_image'] = esc_url_raw($new_instance['feed_image']);
@@ -333,7 +333,7 @@ if (!class_exists('EW_Authors')) :
 			$args['orderby']   = sanitize_key( $atts['orderby'] );
 			$args['number']    = absint( $atts['number'] );
 			$args['include']   = preg_replace( '/[^0-9,]/', '', $atts['include'] );
-			$args['exclude']   = preg_replace( '/[^0-9,]/', '', $atts['exclude'] );
+			$args['exclude']   = preg_replace( '/[^0-9,]/', '', $atts['exclude'] ); // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_list_authors() parameter, not a WP_Query post__not_in clause.
 			$args['html']      = (bool) $atts['html'];
 			$args['echo']      = false;
 			$args['optioncount']   = (bool) $atts['optioncount'];
@@ -376,7 +376,7 @@ if (!function_exists('ew_authors_register')) :
 	 *
 	 * @since 1.0.0
 	 */
-	function ew_authors_register()
+	function ew_authors_register() // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- ew_ is this plugin's abbreviated prefix.
 	{
 		register_widget('EW_Authors');
 	}

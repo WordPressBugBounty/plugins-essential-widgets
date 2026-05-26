@@ -1,11 +1,11 @@
-# Copyright (C) 2018-2025 Catch Plugins
+# Copyright (C) 2018-2026 Catch Plugins
 # This file is distributed under the GNU General Public License v2 or later.
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Essential Widgets\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2026-01-26 23:41+0545\n"
+"POT-Creation-Date: 2026-05-26 23:50+0545\n"
 "PO-Revision-Date: 2016-12-12 09:23-0500\n"
 "Last-Translator: Sakin Shrestha <info@catchplugins.com>\n"
 "Language-Team: Catch Plugins <info@catchplugins.com>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-KeywordsList: "
 "__;_e;_n:1,2;_x:1,2c;esc_attr_e;esc_attr__;_nx;_x;esc_html_e;esc_html__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_n_noop:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
 "X-Poedit-Basepath: .\n"
@@ -59,15 +59,15 @@ msgid "Rate"
 msgstr ""
 
 #: ../admin/class-essential-widgets-admin.php:250
-#: ../admin/partials/dashboard-display.php:25
+#: ../admin/partials/dashboard-display.php:26
 msgid "Settings"
 msgstr ""
 
-#: ../admin/partials/dashboard-display.php:30
+#: ../admin/partials/dashboard-display.php:31
 msgid "Switch the widgets On/Off as necessary in the section below."
 msgstr ""
 
-#: ../admin/partials/dashboard-display.php:31
+#: ../admin/partials/dashboard-display.php:32
 msgid "Click here to manage the widgets"
 msgstr ""
 
@@ -84,12 +84,12 @@ msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:32
 #: ../admin/partials/essential-widgets-admin-display.php:109
-#: ../admin/partials/essential-widgets-admin-display.php:172
+#: ../admin/partials/essential-widgets-admin-display.php:173
 msgid "Features"
 msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:33
-#: ../admin/partials/essential-widgets-admin-display.php:164
+#: ../admin/partials/essential-widgets-admin-display.php:165
 msgid "Compare Table"
 msgstr ""
 
@@ -116,7 +116,7 @@ msgid "Dismiss this item."
 msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:83
-#: ../admin/partials/essential-widgets-admin-display.php:237
+#: ../admin/partials/essential-widgets-admin-display.php:266
 #: ../admin/partials/sidebar.php:16
 msgid "EW: About"
 msgstr ""
@@ -127,61 +127,61 @@ msgid "EW: Advertisement Code"
 msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:85
-#: ../admin/partials/essential-widgets-admin-display.php:253
+#: ../admin/partials/essential-widgets-admin-display.php:290
 #: ../admin/partials/sidebar.php:18
 msgid "EW: Advertisement Images"
 msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:86
-#: ../admin/partials/essential-widgets-admin-display.php:261
+#: ../admin/partials/essential-widgets-admin-display.php:302
 #: ../admin/partials/sidebar.php:19
 msgid "EW: Featured Embeds"
 msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:87
-#: ../admin/partials/essential-widgets-admin-display.php:269
+#: ../admin/partials/essential-widgets-admin-display.php:314
 #: ../admin/partials/sidebar.php:20
 msgid "EW: Featured Images"
 msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:88
-#: ../admin/partials/essential-widgets-admin-display.php:277
+#: ../admin/partials/essential-widgets-admin-display.php:326
 #: ../admin/partials/sidebar.php:21
 msgid "EW: Featured Pages"
 msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:89
-#: ../admin/partials/essential-widgets-admin-display.php:285
+#: ../admin/partials/essential-widgets-admin-display.php:338
 #: ../admin/partials/sidebar.php:22
 msgid "EW: Featured Posts"
 msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:90
-#: ../admin/partials/essential-widgets-admin-display.php:293
+#: ../admin/partials/essential-widgets-admin-display.php:350
 #: ../admin/partials/sidebar.php:23
 msgid "EW: Gallery Images"
 msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:91
-#: ../admin/partials/essential-widgets-admin-display.php:301
+#: ../admin/partials/essential-widgets-admin-display.php:362
 #: ../admin/partials/sidebar.php:24
 msgid "EW: Gallery Pages"
 msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:92
-#: ../admin/partials/essential-widgets-admin-display.php:309
+#: ../admin/partials/essential-widgets-admin-display.php:374
 #: ../admin/partials/sidebar.php:25
 msgid "EW: Gallery Posts"
 msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:93
-#: ../admin/partials/essential-widgets-admin-display.php:325
+#: ../admin/partials/essential-widgets-admin-display.php:398
 #: ../admin/partials/sidebar.php:26
 msgid "EW: Image"
 msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:94
-#: ../admin/partials/essential-widgets-admin-display.php:341
+#: ../admin/partials/essential-widgets-admin-display.php:422
 #: ../admin/partials/sidebar.php:27
 msgid "EW: Image Slider"
 msgstr ""
@@ -192,13 +192,13 @@ msgid "EW: Newletter"
 msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:96
-#: ../admin/partials/essential-widgets-admin-display.php:333
+#: ../admin/partials/essential-widgets-admin-display.php:410
 #: ../admin/partials/sidebar.php:30
 msgid "EW: Video"
 msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:97
-#: ../admin/partials/essential-widgets-admin-display.php:349
+#: ../admin/partials/essential-widgets-admin-display.php:434
 #: ../admin/partials/sidebar.php:29
 msgid "EW: Tabbed Recent/Popular Posts"
 msgstr ""
@@ -208,8 +208,8 @@ msgid "Find out why you should upgrade to Essential Widgets Premium »"
 msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:115
-#: ../admin/partials/essential-widgets-admin-display.php:213
-#: ../includes/widgets/class-ew-archives.php:26
+#: ../admin/partials/essential-widgets-admin-display.php:230
+#: ../includes/widgets/class-ew-archives.php:27
 msgid "EW: Archives"
 msgstr ""
 
@@ -221,7 +221,7 @@ msgid ""
 msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:120
-#: ../admin/partials/essential-widgets-admin-display.php:221
+#: ../admin/partials/essential-widgets-admin-display.php:242
 #: ../includes/widgets/class-ew-authors.php:64
 msgid "EW: Authors"
 msgstr ""
@@ -235,8 +235,8 @@ msgid ""
 msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:125
-#: ../admin/partials/essential-widgets-admin-display.php:229
-#: ../includes/widgets/class-ew-categories.php:63
+#: ../admin/partials/essential-widgets-admin-display.php:254
+#: ../includes/widgets/class-ew-categories.php:64
 msgid "EW: Categories"
 msgstr ""
 
@@ -250,8 +250,8 @@ msgid ""
 msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:130
-#: ../admin/partials/essential-widgets-admin-display.php:181
-#: ../includes/widgets/class-ew-menus.php:60
+#: ../admin/partials/essential-widgets-admin-display.php:182
+#: ../includes/widgets/class-ew-menus.php:61
 msgid "EW: Menus"
 msgstr ""
 
@@ -264,8 +264,8 @@ msgid ""
 msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:135
-#: ../admin/partials/essential-widgets-admin-display.php:189
-#: ../includes/widgets/class-ew-pages.php:68
+#: ../admin/partials/essential-widgets-admin-display.php:194
+#: ../includes/widgets/class-ew-pages.php:69
 msgid "EW: Pages"
 msgstr ""
 
@@ -277,8 +277,8 @@ msgid ""
 msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:140
-#: ../admin/partials/essential-widgets-admin-display.php:197
-#: ../includes/widgets/class-ew-posts.php:54
+#: ../admin/partials/essential-widgets-admin-display.php:206
+#: ../includes/widgets/class-ew-posts.php:55
 msgid "EW: Posts"
 msgstr ""
 
@@ -291,8 +291,8 @@ msgid ""
 msgstr ""
 
 #: ../admin/partials/essential-widgets-admin-display.php:145
-#: ../admin/partials/essential-widgets-admin-display.php:205
-#: ../includes/widgets/class-ew-tags.php:70
+#: ../admin/partials/essential-widgets-admin-display.php:218
+#: ../includes/widgets/class-ew-tags.php:71
 msgid "EW: Tags"
 msgstr ""
 
@@ -327,19 +327,19 @@ msgid ""
 "installation instructions (particularly step 1)."
 msgstr ""
 
-#: ../admin/partials/essential-widgets-admin-display.php:173
+#: ../admin/partials/essential-widgets-admin-display.php:174
 msgid "Free"
 msgstr ""
 
-#: ../admin/partials/essential-widgets-admin-display.php:174
+#: ../admin/partials/essential-widgets-admin-display.php:175
 msgid "Pro"
 msgstr ""
 
-#: ../admin/partials/essential-widgets-admin-display.php:245
+#: ../admin/partials/essential-widgets-admin-display.php:278
 msgid "EW: Advertisement Codes"
 msgstr ""
 
-#: ../admin/partials/essential-widgets-admin-display.php:317
+#: ../admin/partials/essential-widgets-admin-display.php:386
 msgid "EW: Newsletter"
 msgstr ""
 
@@ -424,7 +424,7 @@ msgid ""
 "without affecting your wallet."
 msgstr ""
 
-#: ../admin/partials/sidebar.php:67
+#: ../admin/partials/sidebar.php:66
 msgid "check our free plugins."
 msgstr ""
 
@@ -466,28 +466,28 @@ msgid "Authors"
 msgstr ""
 
 #: ../includes/ew-block/blocks/ew-category/index.php:110
-#: ../includes/widgets/class-ew-categories.php:30
+#: ../includes/widgets/class-ew-categories.php:31
 msgid "Categories"
 msgstr ""
 
 #: ../includes/ew-block/blocks/ew-menu/index.php:80
-#: ../includes/widgets/class-ew-menus.php:34
+#: ../includes/widgets/class-ew-menus.php:35
 msgid "Navigation"
 msgstr ""
 
 #: ../includes/ew-block/blocks/ew-page/index.php:135
-#: ../includes/widgets/class-ew-pages.php:36
+#: ../includes/widgets/class-ew-pages.php:37
 msgid "Pages"
 msgstr ""
 
 #: ../includes/ew-block/blocks/ew-post/index.php:56
-#: ../includes/widgets/class-ew-posts.php:34
+#: ../includes/widgets/class-ew-posts.php:35
 msgid "Posts"
 msgstr ""
 
 #: ../includes/ew-block/blocks/ew-tags/index.php:8
 #: ../includes/widgets/class-ew-authors.php:32
-#: ../includes/widgets/class-ew-tags.php:30
+#: ../includes/widgets/class-ew-tags.php:31
 #, php-format
 msgid "%s topic"
 msgid_plural "%s topics"
@@ -495,7 +495,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: ../includes/ew-block/blocks/ew-tags/index.php:123
-#: ../includes/widgets/class-ew-tags.php:34
+#: ../includes/widgets/class-ew-tags.php:35
 msgid "Tags"
 msgstr ""
 
@@ -503,144 +503,144 @@ msgstr ""
 msgid "EW Blocks"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:13
+#: ../includes/widgets/class-ew-archives.php:14
 msgid "Archives"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:29
-#: ../includes/widgets/class-ew-categories.php:54
+#: ../includes/widgets/class-ew-archives.php:30
+#: ../includes/widgets/class-ew-categories.php:55
 msgid "Displays a list of categories"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:47
+#: ../includes/widgets/class-ew-archives.php:48
 msgid "Alphabetical"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:48
+#: ../includes/widgets/class-ew-archives.php:49
 msgid "Daily"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:49
+#: ../includes/widgets/class-ew-archives.php:50
 msgid "Monthly"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:50
+#: ../includes/widgets/class-ew-archives.php:51
 msgid "Post By Post"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:51
+#: ../includes/widgets/class-ew-archives.php:52
 msgid "Weekly"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:52
+#: ../includes/widgets/class-ew-archives.php:53
 msgid "Yearly"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:56
-#: ../includes/widgets/class-ew-authors.php:76
-#: ../includes/widgets/class-ew-categories.php:83
-#: ../includes/widgets/class-ew-pages.php:95
-#: ../includes/widgets/class-ew-posts.php:76
-#: ../includes/widgets/class-ew-tags.php:95
-msgid "Ascending"
-msgstr ""
-
 #: ../includes/widgets/class-ew-archives.php:57
-#: ../includes/widgets/class-ew-authors.php:77
+#: ../includes/widgets/class-ew-authors.php:76
 #: ../includes/widgets/class-ew-categories.php:84
 #: ../includes/widgets/class-ew-pages.php:96
 #: ../includes/widgets/class-ew-posts.php:77
 #: ../includes/widgets/class-ew-tags.php:96
+msgid "Ascending"
+msgstr ""
+
+#: ../includes/widgets/class-ew-archives.php:58
+#: ../includes/widgets/class-ew-authors.php:77
+#: ../includes/widgets/class-ew-categories.php:85
+#: ../includes/widgets/class-ew-pages.php:97
+#: ../includes/widgets/class-ew-posts.php:78
+#: ../includes/widgets/class-ew-tags.php:97
 msgid "Descending"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:61
+#: ../includes/widgets/class-ew-archives.php:62
 #: ../includes/widgets/class-ew-authors.php:93
 msgid "Plain"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:62
+#: ../includes/widgets/class-ew-archives.php:63
 #: ../includes/widgets/class-ew-authors.php:92
-#: ../includes/widgets/class-ew-categories.php:78
-#: ../includes/widgets/class-ew-tags.php:90
+#: ../includes/widgets/class-ew-categories.php:79
+#: ../includes/widgets/class-ew-tags.php:91
 msgid "List"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:63
+#: ../includes/widgets/class-ew-archives.php:64
 msgid "Dropdown"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:68
+#: ../includes/widgets/class-ew-archives.php:69
 #: ../includes/widgets/class-ew-authors.php:106
-#: ../includes/widgets/class-ew-categories.php:105
-#: ../includes/widgets/class-ew-menus.php:83
-#: ../includes/widgets/class-ew-pages.php:119
-#: ../includes/widgets/class-ew-posts.php:96
-#: ../includes/widgets/class-ew-tags.php:114
+#: ../includes/widgets/class-ew-categories.php:106
+#: ../includes/widgets/class-ew-menus.php:85
+#: ../includes/widgets/class-ew-pages.php:120
+#: ../includes/widgets/class-ew-posts.php:97
+#: ../includes/widgets/class-ew-tags.php:115
 msgid "Title:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:74
+#: ../includes/widgets/class-ew-archives.php:75
 msgid "Limit:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:80
+#: ../includes/widgets/class-ew-archives.php:81
 msgid "Type:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:90
-#: ../includes/widgets/class-ew-pages.php:126
-#: ../includes/widgets/class-ew-posts.php:101
+#: ../includes/widgets/class-ew-archives.php:91
+#: ../includes/widgets/class-ew-pages.php:127
+#: ../includes/widgets/class-ew-posts.php:102
 msgid "Post Type:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:100
+#: ../includes/widgets/class-ew-archives.php:101
 #: ../includes/widgets/class-ew-authors.php:113
-#: ../includes/widgets/class-ew-categories.php:142
-#: ../includes/widgets/class-ew-pages.php:142
-#: ../includes/widgets/class-ew-posts.php:135
-#: ../includes/widgets/class-ew-tags.php:153
+#: ../includes/widgets/class-ew-categories.php:143
+#: ../includes/widgets/class-ew-pages.php:143
+#: ../includes/widgets/class-ew-posts.php:136
+#: ../includes/widgets/class-ew-tags.php:154
 msgid "Order:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:110
+#: ../includes/widgets/class-ew-archives.php:111
 #: ../includes/widgets/class-ew-authors.php:152
-#: ../includes/widgets/class-ew-tags.php:139
+#: ../includes/widgets/class-ew-tags.php:140
 msgid "Display as:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:120
-#: ../includes/widgets/class-ew-menus.php:187
+#: ../includes/widgets/class-ew-archives.php:121
+#: ../includes/widgets/class-ew-menus.php:189
 msgid "Before:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:126
-#: ../includes/widgets/class-ew-menus.php:194
+#: ../includes/widgets/class-ew-archives.php:127
+#: ../includes/widgets/class-ew-menus.php:196
 msgid "After:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:134
+#: ../includes/widgets/class-ew-archives.php:135
 #: ../includes/widgets/class-ew-authors.php:226
 msgid "Show post count?"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:212
+#: ../includes/widgets/class-ew-archives.php:213
 msgid "Select Year"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:213
+#: ../includes/widgets/class-ew-archives.php:214
 msgid "Select Month"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:214
+#: ../includes/widgets/class-ew-archives.php:215
 msgid "Select Day"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:215
+#: ../includes/widgets/class-ew-archives.php:216
 msgid "Select Week"
 msgstr ""
 
-#: ../includes/widgets/class-ew-archives.php:216
+#: ../includes/widgets/class-ew-archives.php:217
 msgid "Select Post"
 msgstr ""
 
@@ -657,9 +657,9 @@ msgid "Email"
 msgstr ""
 
 #: ../includes/widgets/class-ew-authors.php:83
-#: ../includes/widgets/class-ew-categories.php:89
-#: ../includes/widgets/class-ew-pages.php:102
-#: ../includes/widgets/class-ew-posts.php:86
+#: ../includes/widgets/class-ew-categories.php:90
+#: ../includes/widgets/class-ew-pages.php:103
+#: ../includes/widgets/class-ew-posts.php:87
 msgid "ID"
 msgstr ""
 
@@ -684,83 +684,83 @@ msgid "Login"
 msgstr ""
 
 #: ../includes/widgets/class-ew-authors.php:98
-#: ../includes/widgets/class-ew-categories.php:97
+#: ../includes/widgets/class-ew-categories.php:98
 msgid "Atom"
 msgstr ""
 
 #: ../includes/widgets/class-ew-authors.php:99
-#: ../includes/widgets/class-ew-categories.php:98
+#: ../includes/widgets/class-ew-categories.php:99
 msgid "RDF"
 msgstr ""
 
 #: ../includes/widgets/class-ew-authors.php:100
-#: ../includes/widgets/class-ew-categories.php:99
+#: ../includes/widgets/class-ew-categories.php:100
 msgid "RSS"
 msgstr ""
 
 #: ../includes/widgets/class-ew-authors.php:101
-#: ../includes/widgets/class-ew-categories.php:100
+#: ../includes/widgets/class-ew-categories.php:101
 msgid "RSS 2.0"
 msgstr ""
 
 #: ../includes/widgets/class-ew-authors.php:129
-#: ../includes/widgets/class-ew-categories.php:158
-#: ../includes/widgets/class-ew-pages.php:158
-#: ../includes/widgets/class-ew-posts.php:149
-#: ../includes/widgets/class-ew-tags.php:167
+#: ../includes/widgets/class-ew-categories.php:159
+#: ../includes/widgets/class-ew-pages.php:159
+#: ../includes/widgets/class-ew-posts.php:150
+#: ../includes/widgets/class-ew-tags.php:168
 msgid "Order By:"
 msgstr ""
 
 #: ../includes/widgets/class-ew-authors.php:145
-#: ../includes/widgets/class-ew-categories.php:181
-#: ../includes/widgets/class-ew-pages.php:181
-#: ../includes/widgets/class-ew-posts.php:120
-#: ../includes/widgets/class-ew-tags.php:181
+#: ../includes/widgets/class-ew-categories.php:182
+#: ../includes/widgets/class-ew-pages.php:182
+#: ../includes/widgets/class-ew-posts.php:121
+#: ../includes/widgets/class-ew-tags.php:182
 msgid "Number:"
 msgstr ""
 
 #: ../includes/widgets/class-ew-authors.php:168
-#: ../includes/widgets/class-ew-categories.php:188
-#: ../includes/widgets/class-ew-pages.php:202
-#: ../includes/widgets/class-ew-tags.php:202
+#: ../includes/widgets/class-ew-categories.php:189
+#: ../includes/widgets/class-ew-pages.php:203
+#: ../includes/widgets/class-ew-tags.php:203
 msgid "Include:"
 msgstr ""
 
 #: ../includes/widgets/class-ew-authors.php:175
-#: ../includes/widgets/class-ew-categories.php:195
-#: ../includes/widgets/class-ew-pages.php:209
-#: ../includes/widgets/class-ew-tags.php:209
+#: ../includes/widgets/class-ew-categories.php:196
+#: ../includes/widgets/class-ew-pages.php:210
+#: ../includes/widgets/class-ew-tags.php:210
 msgid "Exclude:"
 msgstr ""
 
 #: ../includes/widgets/class-ew-authors.php:181
-#: ../includes/widgets/class-ew-categories.php:201
-#: ../includes/widgets/class-ew-menus.php:173
-#: ../includes/widgets/class-ew-pages.php:215
-#: ../includes/widgets/class-ew-tags.php:195
+#: ../includes/widgets/class-ew-categories.php:202
+#: ../includes/widgets/class-ew-menus.php:175
+#: ../includes/widgets/class-ew-pages.php:216
+#: ../includes/widgets/class-ew-tags.php:196
 msgid "More Options"
 msgstr ""
 
 #: ../includes/widgets/class-ew-authors.php:182
-#: ../includes/widgets/class-ew-categories.php:202
-#: ../includes/widgets/class-ew-menus.php:174
-#: ../includes/widgets/class-ew-pages.php:216
-#: ../includes/widgets/class-ew-tags.php:196
+#: ../includes/widgets/class-ew-categories.php:203
+#: ../includes/widgets/class-ew-menus.php:176
+#: ../includes/widgets/class-ew-pages.php:217
+#: ../includes/widgets/class-ew-tags.php:197
 msgid "Hide Options"
 msgstr ""
 
 #: ../includes/widgets/class-ew-authors.php:188
-#: ../includes/widgets/class-ew-categories.php:236
+#: ../includes/widgets/class-ew-categories.php:237
 msgid "Feed Type:"
 msgstr ""
 
 #: ../includes/widgets/class-ew-authors.php:204
-#: ../includes/widgets/class-ew-categories.php:252
+#: ../includes/widgets/class-ew-categories.php:253
 msgid "Feed Text:"
 msgstr ""
 
 #: ../includes/widgets/class-ew-authors.php:211
-#: ../includes/widgets/class-ew-categories.php:259
+#: ../includes/widgets/class-ew-categories.php:260
 msgid "Feed Image:"
 msgstr ""
 
@@ -777,287 +777,287 @@ msgid "Show full name?"
 msgstr ""
 
 #: ../includes/widgets/class-ew-authors.php:247
-#: ../includes/widgets/class-ew-categories.php:288
-#: ../includes/widgets/class-ew-tags.php:322
+#: ../includes/widgets/class-ew-categories.php:289
+#: ../includes/widgets/class-ew-tags.php:323
 msgid "Hide empty?"
 msgstr ""
 
-#: ../includes/widgets/class-ew-categories.php:79
-#: ../includes/widgets/class-ew-posts.php:83
+#: ../includes/widgets/class-ew-categories.php:80
+#: ../includes/widgets/class-ew-posts.php:84
 msgid "None"
 msgstr ""
 
-#: ../includes/widgets/class-ew-categories.php:88
-#: ../includes/widgets/class-ew-tags.php:101
+#: ../includes/widgets/class-ew-categories.php:89
+#: ../includes/widgets/class-ew-tags.php:102
 msgid "Count"
 msgstr ""
 
-#: ../includes/widgets/class-ew-categories.php:90
-#: ../includes/widgets/class-ew-tags.php:102
+#: ../includes/widgets/class-ew-categories.php:91
+#: ../includes/widgets/class-ew-tags.php:103
 msgid "Name"
 msgstr ""
 
-#: ../includes/widgets/class-ew-categories.php:91
-#: ../includes/widgets/class-ew-pages.php:105
-#: ../includes/widgets/class-ew-posts.php:82
+#: ../includes/widgets/class-ew-categories.php:92
+#: ../includes/widgets/class-ew-pages.php:106
+#: ../includes/widgets/class-ew-posts.php:83
 msgid "Slug"
 msgstr ""
 
-#: ../includes/widgets/class-ew-categories.php:92
+#: ../includes/widgets/class-ew-categories.php:93
 msgid "Term Group"
 msgstr ""
 
-#: ../includes/widgets/class-ew-categories.php:112
-#: ../includes/widgets/class-ew-tags.php:119
+#: ../includes/widgets/class-ew-categories.php:113
+#: ../includes/widgets/class-ew-tags.php:120
 msgid "Taxonomy:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-categories.php:126
+#: ../includes/widgets/class-ew-categories.php:127
 msgid "Style:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-categories.php:174
-#: ../includes/widgets/class-ew-menus.php:180
-#: ../includes/widgets/class-ew-pages.php:174
+#: ../includes/widgets/class-ew-categories.php:175
+#: ../includes/widgets/class-ew-menus.php:182
+#: ../includes/widgets/class-ew-pages.php:175
 msgid "Depth:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-categories.php:208
-#: ../includes/widgets/class-ew-pages.php:222
+#: ../includes/widgets/class-ew-categories.php:209
+#: ../includes/widgets/class-ew-pages.php:223
 msgid "Exclude Tree:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-categories.php:215
-#: ../includes/widgets/class-ew-pages.php:195
-#: ../includes/widgets/class-ew-tags.php:251
+#: ../includes/widgets/class-ew-categories.php:216
+#: ../includes/widgets/class-ew-pages.php:196
+#: ../includes/widgets/class-ew-tags.php:252
 msgid "Child Of:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-categories.php:222
+#: ../includes/widgets/class-ew-categories.php:223
 msgid "Current Category:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-categories.php:229
-#: ../includes/widgets/class-ew-tags.php:265
+#: ../includes/widgets/class-ew-categories.php:230
+#: ../includes/widgets/class-ew-tags.php:266
 msgid "Search:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-categories.php:267
-#: ../includes/widgets/class-ew-pages.php:297
+#: ../includes/widgets/class-ew-categories.php:268
+#: ../includes/widgets/class-ew-pages.php:298
 msgid "Hierarchical?"
 msgstr ""
 
-#: ../includes/widgets/class-ew-categories.php:274
+#: ../includes/widgets/class-ew-categories.php:275
 msgid "Show description on hover?"
 msgstr ""
 
-#: ../includes/widgets/class-ew-categories.php:281
-#: ../includes/widgets/class-ew-tags.php:308
+#: ../includes/widgets/class-ew-categories.php:282
+#: ../includes/widgets/class-ew-tags.php:309
 msgid "Show count?"
 msgstr ""
 
-#: ../includes/widgets/class-ew-menus.php:51
+#: ../includes/widgets/class-ew-menus.php:52
 msgid "Displays a list of menus."
 msgstr ""
 
-#: ../includes/widgets/class-ew-menus.php:90
+#: ../includes/widgets/class-ew-menus.php:92
 msgid "Menu:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-menus.php:106
+#: ../includes/widgets/class-ew-menus.php:108
 msgid "Container:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-menus.php:122
+#: ../includes/widgets/class-ew-menus.php:124
 msgid "Container ID:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-menus.php:128
-#: ../includes/widgets/class-ew-menus.php:141
-#: ../includes/widgets/class-ew-menus.php:154
-#: ../includes/widgets/class-ew-menus.php:167
+#: ../includes/widgets/class-ew-menus.php:130
+#: ../includes/widgets/class-ew-menus.php:143
+#: ../includes/widgets/class-ew-menus.php:156
+#: ../includes/widgets/class-ew-menus.php:169
 msgid "example"
 msgstr ""
 
-#: ../includes/widgets/class-ew-menus.php:135
+#: ../includes/widgets/class-ew-menus.php:137
 msgid "Container Class:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-menus.php:148
+#: ../includes/widgets/class-ew-menus.php:150
 msgid "Menu ID:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-menus.php:161
+#: ../includes/widgets/class-ew-menus.php:163
 msgid "Menu Class:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-menus.php:201
-#: ../includes/widgets/class-ew-pages.php:259
+#: ../includes/widgets/class-ew-menus.php:203
+#: ../includes/widgets/class-ew-pages.php:260
 msgid "Link Before:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-menus.php:208
-#: ../includes/widgets/class-ew-pages.php:266
+#: ../includes/widgets/class-ew-menus.php:210
+#: ../includes/widgets/class-ew-pages.php:267
 msgid "Link After:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-menus.php:215
+#: ../includes/widgets/class-ew-menus.php:217
 msgid "Fallback Callback Function:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-pages.php:59
+#: ../includes/widgets/class-ew-pages.php:60
 msgid "Displays a list of pages."
 msgstr ""
 
-#: ../includes/widgets/class-ew-pages.php:100
-#: ../includes/widgets/class-ew-posts.php:81
+#: ../includes/widgets/class-ew-pages.php:101
+#: ../includes/widgets/class-ew-posts.php:82
 msgid "Author"
 msgstr ""
 
-#: ../includes/widgets/class-ew-pages.php:101
-#: ../includes/widgets/class-ew-posts.php:85
+#: ../includes/widgets/class-ew-pages.php:102
+#: ../includes/widgets/class-ew-posts.php:86
 msgid "Date"
 msgstr ""
 
-#: ../includes/widgets/class-ew-pages.php:103
-#: ../includes/widgets/class-ew-posts.php:90
+#: ../includes/widgets/class-ew-pages.php:104
+#: ../includes/widgets/class-ew-posts.php:91
 msgid "Menu Order"
 msgstr ""
 
-#: ../includes/widgets/class-ew-pages.php:104
-#: ../includes/widgets/class-ew-pages.php:112
+#: ../includes/widgets/class-ew-pages.php:105
+#: ../includes/widgets/class-ew-pages.php:113
 msgid "Modified"
 msgstr ""
 
-#: ../includes/widgets/class-ew-pages.php:106
-#: ../includes/widgets/class-ew-posts.php:91
+#: ../includes/widgets/class-ew-pages.php:107
+#: ../includes/widgets/class-ew-posts.php:92
 msgid "Title"
 msgstr ""
 
-#: ../includes/widgets/class-ew-pages.php:110
+#: ../includes/widgets/class-ew-pages.php:111
 msgid "Select"
 msgstr ""
 
-#: ../includes/widgets/class-ew-pages.php:111
+#: ../includes/widgets/class-ew-pages.php:112
 msgid "Created"
 msgstr ""
 
-#: ../includes/widgets/class-ew-pages.php:188
+#: ../includes/widgets/class-ew-pages.php:189
 msgid "Offset:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-pages.php:229
+#: ../includes/widgets/class-ew-pages.php:230
 msgid "Meta Key:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-pages.php:245
+#: ../includes/widgets/class-ew-pages.php:246
 msgid "Meta Value:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-pages.php:252
+#: ../includes/widgets/class-ew-pages.php:253
 msgid "Authors:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-pages.php:273
+#: ../includes/widgets/class-ew-pages.php:274
 msgid "Show Date:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-pages.php:289
+#: ../includes/widgets/class-ew-pages.php:290
 msgid "Date Format:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-posts.php:45
+#: ../includes/widgets/class-ew-posts.php:46
 msgid "Displays a list of posts."
 msgstr ""
 
-#: ../includes/widgets/class-ew-posts.php:84
+#: ../includes/widgets/class-ew-posts.php:85
 msgid "Type"
 msgstr ""
 
-#: ../includes/widgets/class-ew-posts.php:87
+#: ../includes/widgets/class-ew-posts.php:88
 msgid "Date (Modified)"
 msgstr ""
 
-#: ../includes/widgets/class-ew-posts.php:88
+#: ../includes/widgets/class-ew-posts.php:89
 msgid "Parent"
 msgstr ""
 
-#: ../includes/widgets/class-ew-posts.php:89
+#: ../includes/widgets/class-ew-posts.php:90
 msgid "Comment Count"
 msgstr ""
 
-#: ../includes/widgets/class-ew-posts.php:164
+#: ../includes/widgets/class-ew-posts.php:165
 msgid "Display post date?"
 msgstr ""
 
-#: ../includes/widgets/class-ew-posts.php:171
+#: ../includes/widgets/class-ew-posts.php:172
 msgid "Display post author?"
 msgstr ""
 
-#: ../includes/widgets/class-ew-tags.php:61
+#: ../includes/widgets/class-ew-tags.php:62
 msgid "Displays a list of tags"
 msgstr ""
 
-#: ../includes/widgets/class-ew-tags.php:84
+#: ../includes/widgets/class-ew-tags.php:85
 msgid "View"
 msgstr ""
 
-#: ../includes/widgets/class-ew-tags.php:85
+#: ../includes/widgets/class-ew-tags.php:86
 msgid "Edit"
 msgstr ""
 
-#: ../includes/widgets/class-ew-tags.php:89
+#: ../includes/widgets/class-ew-tags.php:90
 msgid "Cloud"
 msgstr ""
 
-#: ../includes/widgets/class-ew-tags.php:91
+#: ../includes/widgets/class-ew-tags.php:92
 msgid "Round Corners"
 msgstr ""
 
-#: ../includes/widgets/class-ew-tags.php:97
+#: ../includes/widgets/class-ew-tags.php:98
 msgid "Random"
 msgstr ""
 
-#: ../includes/widgets/class-ew-tags.php:216
+#: ../includes/widgets/class-ew-tags.php:217
 msgid "Largest:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-tags.php:223
+#: ../includes/widgets/class-ew-tags.php:224
 msgid "Smallest:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-tags.php:230
+#: ../includes/widgets/class-ew-tags.php:231
 msgid "Unit:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-tags.php:244
+#: ../includes/widgets/class-ew-tags.php:245
 msgid "Separator:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-tags.php:258
+#: ../includes/widgets/class-ew-tags.php:259
 msgid "Parent:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-tags.php:272
+#: ../includes/widgets/class-ew-tags.php:273
 msgid "Name Like:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-tags.php:279
+#: ../includes/widgets/class-ew-tags.php:280
 msgid "Single Text:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-tags.php:286
+#: ../includes/widgets/class-ew-tags.php:287
 msgid "Multiple Text:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-tags.php:293
+#: ../includes/widgets/class-ew-tags.php:294
 msgid "Count Text Callback:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-tags.php:300
+#: ../includes/widgets/class-ew-tags.php:301
 msgid "Count Scale Callback:"
 msgstr ""
 
-#: ../includes/widgets/class-ew-tags.php:315
+#: ../includes/widgets/class-ew-tags.php:316
 msgid "Pad counts?"
 msgstr ""

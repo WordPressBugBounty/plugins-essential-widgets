@@ -51,7 +51,7 @@ endif;
 
 if ( ! function_exists( 'ew_post_render_shortcode' ) ) :
 	add_shortcode( 'ew-post', 'ew_post_render_shortcode' );
-	function ew_post_render_shortcode( $atts ) {
+	function ew_post_render_shortcode( $atts ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- ew_ is this plugin's abbreviated prefix; wrapped in function_exists() guard.
 		$instance['title']         = isset( $atts['title'] ) && 'Posts' === $atts['title']
 			? esc_html__( 'Posts', 'essential-widgets' )
 			: sanitize_text_field( $atts['title'] );
@@ -81,7 +81,7 @@ if ( ! function_exists( 'ew_post_list' ) ) :
 	 *
 	 * @return array|null Array of nav menus object with label and value pair, * or null if none.
 	 */
-	function ew_post_list() {
+	function ew_post_list() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- ew_ is this plugin's abbreviated prefix; wrapped in function_exists() guard.
 		$post_types = get_post_types(
 			array(
 				'public'       => true,

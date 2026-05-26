@@ -16,7 +16,7 @@
  * Plugin Name:       Essential Widgets
  * Plugin URI:        https://catchplugins.com/plugins/essential-widgets/
  * Description:       Essential Widgets is a WordPress plugin for widgets that allows you to create and add amazing widgets with high customization option on your website without affecting your wallet.
- * Version:           3.0.1
+ * Version:           3.1
  * Author:            Catch Plugins
  * Author URI:        https://catchplugins.com/
  * License:           GPL-2.0+
@@ -31,7 +31,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 // Define Version
-define( 'ESSENTIAL_WIDGETS_VERSION', '3.0.1' );
+define( 'ESSENTIAL_WIDGETS_VERSION', '3.1' );
 
 /**
  * The code that runs during plugin activation.
@@ -94,7 +94,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-essential-widgets.php';
 
 function essential_widgets_sanitize_checkbox( $checked ) {
 	// Boolean check.
-	return ( ( isset( $checked ) && true == $checked ) ? true : false );
+	return ( ( isset( $checked ) && true === $checked ) ? true : false );
 }
 
 if ( ! function_exists( 'essential_widgets_get_options' ) ) :
@@ -122,7 +122,7 @@ if ( ! function_exists( 'essential_widgets_default_options' ) ) :
 			$default_options[ $key ] = 1;
 		}
 
-		if ( null == $option ) {
+		if ( null === $option ) {
 			return apply_filters( 'essential_widgets_options', $default_options );
 		} else {
 			return $default_options[ $option ];
@@ -166,8 +166,8 @@ essential_widgets_run();
 /* CTP tabs removal options */
 require plugin_dir_path( __FILE__ ) . 'includes/ctp-tabs-removal.php';
 
-$ctp_options = ctp_get_options();
-if ( 1 == $ctp_options['theme_plugin_tabs'] ) {
+$ctp_options = ctp_get_options(); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Used immediately on the next line; ctp_ prefix kept for cross-plugin compatibility.
+if ( 1 === (int) $ctp_options['theme_plugin_tabs'] ) {
 	/* Adds Catch Themes tab in Add theme page and Themes by Catch Themes in Customizer's change theme option. */
 	if ( ! class_exists( 'CatchThemesThemePlugin' ) && ! function_exists( 'add_our_plugins_tab' ) ) {
 		require plugin_dir_path( __FILE__ ) . 'includes/CatchThemesThemePlugin.php';

@@ -15,7 +15,8 @@ if ( ! class_exists( 'EW_Tags' ) ) :
 	/**
 	 * Custom Tags Widget
 	 */
-	class EW_Tags extends WP_Widget {
+	class EW_Tags extends WP_Widget // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- EW_ is this plugin's abbreviated prefix; wrapped in class_exists() guard.
+	{
 
 
 		/**
@@ -36,7 +37,7 @@ if ( ! class_exists( 'EW_Tags' ) ) :
 				'orderby'                    => 'name',
 				'format'                     => 'flat',
 				'include'                    => '',
-				'exclude'                    => '',
+				'exclude'                    => '', // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_tag_cloud() parameter, not a WP_Query post__not_in clause.
 				'unit'                       => 'pt',
 				'smallest'                   => 8,
 				'largest'                    => 22,
@@ -125,7 +126,7 @@ if ( ! class_exists( 'EW_Tags' ) ) :
 
 						<li>
 							<label>
-								<input type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'taxonomy' ) ); ?>[]" value="<?php echo esc_attr( $taxonomy->name ); ?>" <?php checked( in_array( $taxonomy->name, (array) $instance['taxonomy'] ) ); ?> />
+								<input type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'taxonomy' ) ); ?>[]" value="<?php echo esc_attr( $taxonomy->name ); ?>" <?php checked( in_array( $taxonomy->name, (array) $instance['taxonomy'], true ) ); ?> />
 								<?php echo esc_html( $taxonomy->labels->singular_name ); ?>
 							</label>
 						</li>
@@ -349,10 +350,10 @@ if ( ! class_exists( 'EW_Tags' ) ) :
 			$format  = array( 'flat', 'list', 'round' );
 			$unit    = array( 'pt', 'px', 'em', '%' );
 
-			$instance['order']   = in_array( $new_instance['order'], $order ) ? $new_instance['order'] : 'ASC';
-			$instance['orderby'] = in_array( $new_instance['orderby'], $orderby ) ? $new_instance['orderby'] : 'name';
-			$instance['format']  = in_array( $new_instance['format'], $format ) ? $new_instance['format'] : 'view';
-			$instance['unit']    = in_array( $new_instance['unit'], $unit ) ? $new_instance['unit'] : 'pt';
+			$instance['order']   = in_array( $new_instance['order'], $order, true ) ? $new_instance['order'] : 'ASC';
+			$instance['orderby'] = in_array( $new_instance['orderby'], $orderby, true ) ? $new_instance['orderby'] : 'name';
+			$instance['format']  = in_array( $new_instance['format'], $format, true ) ? $new_instance['format'] : 'flat';
+			$instance['unit']    = in_array( $new_instance['unit'], $unit, true ) ? $new_instance['unit'] : 'pt';
 
 			// Integers.
 			$instance['number']   = intval( $new_instance['number'] );
@@ -363,7 +364,7 @@ if ( ! class_exists( 'EW_Tags' ) ) :
 
 			// Only allow integers and commas.
 			$instance['include'] = preg_replace( '/[^0-9,]/', '', $new_instance['include'] );
-			$instance['exclude'] = preg_replace( '/[^0-9,]/', '', $new_instance['exclude'] );
+			$instance['exclude'] = preg_replace( '/[^0-9,]/', '', $new_instance['exclude'] ); // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_tag_cloud() parameter.
 
 			// Check if function exists.
 			$instance['topic_count_text_callback']  = empty( $new_instance['fallback_cb'] ) || function_exists( $new_instance['topic_count_text_callback'] ) ? $new_instance['topic_count_text_callback'] : 'default_topic_count_text';
@@ -421,7 +422,7 @@ if ( ! class_exists( 'EW_Tags' ) ) :
 
 			// Only show this title in block element and not on widget.
 			if ( isset( $atts['is_block'] ) && true === $atts['is_block'] && ! empty( $atts['title'] ) ) {
-				$ew_tags .= '<h2 class="ew-tags-block-title">' . $esc_html( $atts['title'] ) . '</h2>';
+				$ew_tags .= '<h2 class="ew-tags-block-title">' . esc_html( $atts['title'] ) . '</h2>';
 			}
 
 			// If $format should be flat, wrap it in the <p> element.
@@ -455,7 +456,7 @@ if ( ! function_exists( 'ew_tags_register' ) ) :
 	 *
 	 * @since 1.0.0
 	 */
-	function ew_tags_register() {
+	function ew_tags_register() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- ew_ is this plugin's abbreviated prefix.
 		register_widget( 'EW_Tags' );
 	}
 	add_action( 'widgets_init', 'ew_tags_register' );

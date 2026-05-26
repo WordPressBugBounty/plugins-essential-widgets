@@ -105,7 +105,7 @@ class Essential_Widgets_Admin {
                 plugin_dir_url( __FILE__ ) . 'js/jquery.matchHeight.min.js',
                 array( 'jquery' ),
                 $this->version,
-                false
+                true
             );
 
             wp_enqueue_script(
@@ -113,7 +113,7 @@ class Essential_Widgets_Admin {
                 plugin_dir_url( __FILE__ ) . 'js/admin-scripts.js',
                 array( 'minHeight', 'jquery' ),
                 $this->version,
-                false
+                true
             );
         }
 
@@ -124,7 +124,7 @@ class Essential_Widgets_Admin {
                 plugin_dir_url( __FILE__ ) . 'js/essential-widgets-admin.js',
                 array( 'jquery' ),
                 $this->version,
-                false
+                true
             );
         }
 	}
@@ -181,7 +181,7 @@ class Essential_Widgets_Admin {
         }
 
         $value       = ( isset( $post_data['value'] ) && 'true' === $post_data['value'] ) ? 1 : 0;
-        $option_name = isset( $post_data['option_name'] ) ? sanitize_text_field( $post_data['option_name'] ) : '';
+        $option_name = isset( $post_data['option_name'] ) ? sanitize_key( $post_data['option_name'] ) : '';
 
         if ( empty( $option_name ) ) {
             wp_die( esc_html__( 'Invalid option.', 'essential-widgets' ) );

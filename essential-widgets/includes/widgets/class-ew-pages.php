@@ -19,7 +19,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @package Essential_Widgets
  */
 if ( ! class_exists( 'EW_Pages' ) ) :
-	class EW_Pages extends WP_Widget {
+	class EW_Pages extends WP_Widget // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- EW_ is this plugin's abbreviated prefix; wrapped in class_exists() guard.
+	{
 
 
 		/**
@@ -40,10 +41,10 @@ if ( ! class_exists( 'EW_Pages' ) ) :
 				'offset'       => '',
 				'child_of'     => '',
 				'include'      => '',
-				'exclude'      => '',
+				'exclude'      => '', // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_list_pages() parameter, not a WP_Query post__not_in clause.
 				'exclude_tree' => '',
-				'meta_key'     => '',
-				'meta_value'   => '',
+				'meta_key'     => '', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Required wp_list_pages() parameter.
+				'meta_value'   => '', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Required wp_list_pages() parameter.
 				'authors'      => '',
 				'link_before'  => '',
 				'link_after'   => '',
@@ -322,8 +323,8 @@ if ( ! class_exists( 'EW_Pages' ) ) :
 			$instance['title'] = sanitize_text_field( $new_instance['title'] );
 
 			// Strip tags.
-			$instance['meta_key']    = wp_strip_all_tags( $new_instance['meta_key'] );
-			$instance['meta_value']  = wp_strip_all_tags( $new_instance['meta_value'] );
+			$instance['meta_key']    = wp_strip_all_tags( $new_instance['meta_key'] ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Required wp_list_pages() parameter.
+			$instance['meta_value']  = wp_strip_all_tags( $new_instance['meta_value'] ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Required wp_list_pages() parameter.
 			$instance['date_format'] = wp_strip_all_tags( $new_instance['date_format'] );
 
 			// Sanitize key.
@@ -334,9 +335,9 @@ if ( ! class_exists( 'EW_Pages' ) ) :
 			$sort_column = array( 'post_author', 'post_date', 'ID', 'menu_order', 'post_modified', 'post_name', 'post_title' );
 			$show_date   = array( '', 'created', 'modified' );
 
-			$instance['sort_column'] = in_array( $new_instance['sort_column'], $sort_column ) ? $new_instance['sort_column'] : 'post_title';
-			$instance['sort_order']  = in_array( $new_instance['sort_order'], $sort_order ) ? $new_instance['sort_order'] : 'ASC';
-			$instance['show_date']   = in_array( $new_instance['show_date'], $show_date ) ? $new_instance['show_date'] : '';
+			$instance['sort_column'] = in_array( $new_instance['sort_column'], $sort_column, true ) ? $new_instance['sort_column'] : 'post_title';
+			$instance['sort_order']  = in_array( $new_instance['sort_order'], $sort_order, true )  ? $new_instance['sort_order']  : 'ASC';
+			$instance['show_date']   = in_array( $new_instance['show_date'], $show_date, true )   ? $new_instance['show_date']   : '';
 
 			// Text boxes. Make sure user can use 'unfiltered_html'.
 			$instance['link_before'] = current_user_can( 'unfiltered_html' ) ? $new_instance['link_before'] : wp_kses_post( $new_instance['link_before'] );
@@ -350,13 +351,13 @@ if ( ! class_exists( 'EW_Pages' ) ) :
 
 			// Sanitize text field
 			$instance['include']      = sanitize_text_field( $new_instance['include'] );
-			$instance['exclude']      = sanitize_text_field( $new_instance['exclude'] );
+			$instance['exclude']      = sanitize_text_field( $new_instance['exclude'] ); // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_list_pages() parameter.
 			$instance['exclude_tree'] = sanitize_text_field( $new_instance['exclude_tree'] );
 			$instance['authors']      = sanitize_text_field( $new_instance['authors'] );
 
 			// Then restrict to numbers & commas
 			$instance['include']      = preg_replace( '/[^0-9,]/', '', $new_instance['include'] );
-			$instance['exclude']      = preg_replace( '/[^0-9,]/', '', $new_instance['exclude'] );
+			$instance['exclude']      = preg_replace( '/[^0-9,]/', '', $new_instance['exclude'] ); // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_list_pages() parameter.
 			$instance['exclude_tree'] = preg_replace( '/[^0-9,]/', '', $new_instance['exclude_tree'] );
 			$instance['authors']      = preg_replace( '/[^0-9,]/', '', $new_instance['authors'] );
 
@@ -429,7 +430,7 @@ if ( ! function_exists( 'ew_pages_register' ) ) :
 	 *
 	 * @since 1.0.0
 	 */
-	function ew_pages_register() {
+	function ew_pages_register() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- ew_ is this plugin's abbreviated prefix.
 		register_widget( 'EW_Pages' );
 	}
 	add_action( 'widgets_init', 'ew_pages_register' );

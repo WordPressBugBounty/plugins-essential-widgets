@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template-scope variables; file is included inside a function scope and variables are used immediately.
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly.

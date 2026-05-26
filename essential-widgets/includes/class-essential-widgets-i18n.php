@@ -34,7 +34,7 @@ class Essential_Widgets_i18n {
 	 */
 	public function load_plugin_textdomain() {
 
-		load_plugin_textdomain(
+		load_plugin_textdomain( // phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound -- Kept for compatibility with WordPress < 4.6 where auto-loading is not available.
 			'essential-widgets',
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'

@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if (!class_exists('EW_Blocks')) :
 
-	class EW_Blocks
+	class EW_Blocks // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- EW_ is this plugin's abbreviated prefix; wrapped in class_exists() guard.
 	{
 
 		/**
@@ -46,14 +46,17 @@ if (!class_exists('EW_Blocks')) :
 			wp_enqueue_script(
 				'ew-block-js', // Handle.
 				plugins_url('ew-block/blocks.build.js', dirname(__FILE__)), // Block.build.js: We register the block here. Built with Webpack.
-				array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-editor') // 
+				array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-block-editor'),
+				ESSENTIAL_WIDGETS_VERSION,
+				true
 			);
 
 			// Styles.
 			wp_enqueue_style(
 				'ew-block-editor-css', // Handle.
 				plugins_url('ew-block/blocks.editor.build.css', dirname(__FILE__)), // Block editor CSS.
-				array('wp-edit-blocks') // Dependency to include the CSS after it.
+				array('wp-edit-blocks'), // Dependency to include the CSS after it.
+				ESSENTIAL_WIDGETS_VERSION
 			);
 		} // End function catch_guten_cgb_editor_assets().
 

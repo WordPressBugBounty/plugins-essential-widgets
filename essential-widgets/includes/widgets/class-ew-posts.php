@@ -19,7 +19,8 @@ if ( ! class_exists( 'EW_Posts' ) ) :
 	 *
 	 * @package Essential_Widgets
 	 */
-	class EW_Posts extends WP_Widget {
+	class EW_Posts extends WP_Widget // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- EW_ is this plugin's abbreviated prefix; wrapped in class_exists() guard.
+	{
 
 
 		/**
@@ -106,7 +107,7 @@ if ( ! class_exists( 'EW_Posts' ) ) :
 
 						<li>
 							<label>
-								<input type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'post_type' ) ); ?>[]" value="<?php echo esc_attr( $type->name ); ?>" <?php checked( in_array( $type->name, (array) $instance['post_type'] ) ); ?> />
+								<input type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'post_type' ) ); ?>[]" value="<?php echo esc_attr( $type->name ); ?>" <?php checked( in_array( $type->name, (array) $instance['post_type'], true ) ); ?> />
 								<?php echo esc_html( $type->labels->singular_name ); ?>
 							</label>
 						</li>
@@ -301,7 +302,7 @@ if ( ! class_exists( 'EW_Posts' ) ) :
 				$loop->the_post();
 
 				$output .= '<li>';
-				$output .= '<a href=' . esc_url( get_the_permalink() ) . '>' . esc_html( get_the_title() ) . '</a>';
+				$output .= '<a href="' . esc_url( get_the_permalink() ) . '">' . esc_html( get_the_title() ) . '</a>';
 
 				if ( $atts['show_author'] ) :
 					$output .= '<span class="post-author"> by ' . esc_html( get_the_author() ) . '</span>';
@@ -327,7 +328,7 @@ if ( ! function_exists( 'ew_posts_register' ) ) :
 	 *
 	 * @since 1.0.0
 	 */
-	function ew_posts_register() {
+	function ew_posts_register() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- ew_ is this plugin's abbreviated prefix.
 		register_widget( 'EW_Posts' );
 	}
 	add_action( 'widgets_init', 'ew_posts_register' );

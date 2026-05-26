@@ -30,7 +30,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-$option_name = 'essential_widgets_options';
+$option_name = 'essential_widgets_options'; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- File-scope uninstall variable used immediately.
 
 delete_option( $option_name );
 

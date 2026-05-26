@@ -4,7 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'EW_Archives' ) ) :
-class EW_Archives extends WP_Widget {
+class EW_Archives extends WP_Widget // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- EW_ is this plugin's abbreviated prefix; wrapped in class_exists() guard.
+{
 
 	protected $defaults;
 
@@ -238,7 +239,7 @@ class EW_Archives extends WP_Widget {
 endif;
 
 if ( ! function_exists( 'ew_archives_register' ) ) :
-function ew_archives_register() {
+function ew_archives_register() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- ew_ is this plugin's abbreviated prefix; wrapped in function_exists() guard.
 	register_widget( 'EW_Archives' );
 }
 add_action( 'widgets_init', 'ew_archives_register' );

@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Translators: %s is the number of topics.
-$topic_count_text = _n_noop( '%s topic', '%s topics', 'essential-widgets' );
+$topic_count_text = _n_noop( '%s topic', '%s topics', 'essential-widgets' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- File-scope variable used immediately in block attributes below.
 
 // Hook the post rendering to the block
 if ( function_exists( 'register_block_type' ) ) :
@@ -33,7 +33,7 @@ if ( function_exists( 'register_block_type' ) ) :
 					'type'    => 'string',
 					'default' => '',
 				),
-				'exclude'                    => array(
+				'exclude'                    => array( // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_tag_cloud() parameter, not a WP_Query post__not_in clause.
 					'type'    => 'string',
 					'default' => '',
 				),
@@ -118,7 +118,7 @@ endif;
 
 if ( ! function_exists( 'ew_tags_render_shortcode' ) && class_exists( 'EW_Tags' ) ) :
 	add_shortcode( 'ew-tags', 'ew_tags_render_shortcode' );
-	function ew_tags_render_shortcode( $atts ) {
+	function ew_tags_render_shortcode( $atts ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- ew_ is this plugin's abbreviated prefix; wrapped in function_exists() guard.
 		$instance['title']         = isset( $atts['title'] ) && 'Tags' === $atts['title']
 			? esc_html__( 'Tags', 'essential-widgets' )
 			: sanitize_text_field( $atts['title'] );
@@ -126,7 +126,7 @@ if ( ! function_exists( 'ew_tags_render_shortcode' ) && class_exists( 'EW_Tags' 
 		$instance['orderby']                    = $atts['orderby'];
 		$instance['format']                     = $atts['format'];
 		$instance['include']                    = $atts['include'];
-		$instance['exclude']                    = $atts['exclude'];
+		$instance['exclude']                    = $atts['exclude']; // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_tag_cloud() parameter, not a WP_Query post__not_in clause.
 		$instance['unit']                       = $atts['unit'];
 		$instance['smallest']                   = $atts['smallest'];
 		$instance['largest']                    = $atts['largest'];

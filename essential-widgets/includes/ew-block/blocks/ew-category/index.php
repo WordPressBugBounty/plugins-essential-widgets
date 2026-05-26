@@ -26,7 +26,7 @@ if ( function_exists( 'register_block_type' ) ) :
 					'type'    => 'string',
 					'default' => '',
 				),
-				'exclude'            => array(
+				'exclude'            => array( // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_list_categories() parameter, not a WP_Query post__not_in clause.
 					'type'    => 'string',
 					'default' => '',
 				),
@@ -102,7 +102,7 @@ endif;
 
 if ( ! function_exists( 'ew_category_render_shortcode' ) ) :
 	add_shortcode( 'ew-category', 'ew_category_render_shortcode' );
-	function ew_category_render_shortcode( $atts ) {
+	function ew_category_render_shortcode( $atts ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- ew_ is this plugin's abbreviated prefix; wrapped in function_exists() guard.
 	    $instance = array();
 
 	    // Title
@@ -114,7 +114,7 @@ if ( ! function_exists( 'ew_category_render_shortcode' ) ) :
 	    $instance['taxonomy']           = sanitize_key( $atts['taxonomy'] ?? 'category' );
 	    $instance['style']              = in_array( $atts['style'] ?? 'list', ['list','none'], true ) ? $atts['style'] : 'list';
 	    $instance['include']            = preg_replace('/[^0-9,]/', '', $atts['include'] ?? '');
-	    $instance['exclude']            = preg_replace('/[^0-9,]/', '', $atts['exclude'] ?? '');
+	    $instance['exclude']            = preg_replace('/[^0-9,]/', '', $atts['exclude'] ?? ''); // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_list_categories() parameter.
 	    $instance['exclude_tree']       = preg_replace('/[^0-9,]/', '', $atts['exclude_tree'] ?? '');
 	    $instance['child_of']           = absint( $atts['child_of'] ?? 0 );
 	    $instance['current_category']   = absint( $atts['current_category'] ?? 0 );

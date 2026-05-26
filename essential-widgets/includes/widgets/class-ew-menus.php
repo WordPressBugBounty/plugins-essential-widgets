@@ -19,7 +19,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @package Essential_Widgets
  */
 if ( ! class_exists( 'EW_Menus' ) ) :
-	class EW_Menus extends WP_Widget {
+	class EW_Menus extends WP_Widget // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- EW_ is this plugin's abbreviated prefix; wrapped in class_exists() guard.
+	{
 
 
 		/**
@@ -76,7 +77,8 @@ if ( ! class_exists( 'EW_Menus' ) ) :
 			// Merge the user-selected arguments with the defaults.
 			$instance = wp_parse_args( (array) $instance, $this->defaults );
 
-			$container = apply_filters( 'wp_nav_menu_container_allowedtags', array( 'div', 'nav' ) ); ?>
+			$container = apply_filters( 'wp_nav_menu_container_allowedtags', array( 'div', 'nav' ) ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core WordPress hook, not plugin-defined.
+			?>
 
 			<p>
 				<label>
@@ -244,9 +246,9 @@ if ( ! class_exists( 'EW_Menus' ) ) :
 			$instance['menu'] = wp_strip_all_tags( $new_instance['menu'] );
 
 			// Whitelist options.
-			$container = apply_filters( 'wp_nav_menu_container_allowedtags', array( 'div', 'nav' ) );
+			$container = apply_filters( 'wp_nav_menu_container_allowedtags', array( 'div', 'nav' ) ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core WordPress hook, not plugin-defined.
 
-			$instance['container'] = in_array( $new_instance['container'], $container ) ? $new_instance['container'] : 'div';
+			$instance['container'] = in_array( $new_instance['container'], $container, true ) ? $new_instance['container'] : 'div';
 
 			// Integers.
 			$instance['depth'] = absint( $new_instance['depth'] );
@@ -326,7 +328,7 @@ if ( ! function_exists( 'ew_menu_register' ) ) :
 	 *
 	 * @since 1.0.0
 	 */
-	function ew_menu_register() {
+	function ew_menu_register() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- ew_ is this plugin's abbreviated prefix.
 		register_widget( 'EW_Menus' );
 	}
 	add_action( 'widgets_init', 'ew_menu_register' );

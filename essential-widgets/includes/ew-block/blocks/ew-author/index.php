@@ -30,7 +30,7 @@ if ( function_exists( 'register_block_type' ) ) :
 					'type'    	=> 'string',
 					'default' 	=> '',
 				),
-				'exclude'       => array(
+				'exclude'       => array( // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_list_authors() parameter, not a WP_Query post__not_in clause.
 					'type'    	=> 'string',
 					'default' 	=> '',
 				),
@@ -83,7 +83,7 @@ endif;
 if ( ! function_exists( 'ew_author_render_shortcode' ) ) :
 	add_shortcode( 'ew-author', 'ew_author_render_shortcode' );
 
-	function ew_author_render_shortcode( $atts ) {
+	function ew_author_render_shortcode( $atts ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- ew_ is this plugin's abbreviated prefix; wrapped in function_exists() guard.
 
 		$atts = shortcode_atts(
 			array(
@@ -92,7 +92,7 @@ if ( ! function_exists( 'ew_author_render_shortcode' ) ) :
 				'orderby'       => 'display_name',
 				'number'        => 5,
 				'include'       => '',
-				'exclude'       => '',
+				'exclude'       => '', // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_list_authors() parameter.
 				'optioncount'   => false,
 				'exclude_admin' => false,
 				'show_fullname' => false,
@@ -139,7 +139,7 @@ if ( ! function_exists( 'ew_author_render_shortcode' ) ) :
 
 		// Allow only IDs (numbers + commas)
 		$instance['include'] = preg_replace( '/[^0-9,]/', '', sanitize_text_field( $atts['include'] ) );
-		$instance['exclude'] = preg_replace( '/[^0-9,]/', '', sanitize_text_field( $atts['exclude'] ) );
+		$instance['exclude'] = preg_replace( '/[^0-9,]/', '', sanitize_text_field( $atts['exclude'] ) ); // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_list_authors() parameter.
 
 		// Booleans
 		$instance['optioncount']   = (bool) $atts['optioncount'];

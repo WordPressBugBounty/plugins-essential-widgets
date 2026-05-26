@@ -38,7 +38,7 @@ if ( function_exists( 'register_block_type' ) ) :
 					'type'    => 'string',
 					'default' => '',
 				),
-				'exclude'      => array(
+				'exclude'      => array( // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_list_pages() parameter, not a WP_Query post__not_in clause.
 					'type'    => 'string',
 					'default' => '',
 				),
@@ -47,11 +47,11 @@ if ( function_exists( 'register_block_type' ) ) :
 					'default' => '',
 				),
 
-				'meta_key'     => array(
+				'meta_key'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Required wp_list_pages() parameter.
 					'type'    => 'string',
 					'default' => '',
 				),
-				'meta_value'   => array(
+				'meta_value'   => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Required wp_list_pages() parameter.
 					'type'    => 'string',
 					'default' => '',
 				),
@@ -100,7 +100,7 @@ endif;
 if ( ! function_exists( 'ew_page_render_shortcode' ) ) :
 	add_shortcode( 'ew-page', 'ew_page_render_shortcode' );
 
-	function ew_page_render_shortcode( $atts ) {
+	function ew_page_render_shortcode( $atts ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- ew_ is this plugin's abbreviated prefix; wrapped in function_exists() guard.
 
 		$atts = shortcode_atts(
 			array(
@@ -111,10 +111,10 @@ if ( ! function_exists( 'ew_page_render_shortcode' ) ) :
 				'offset'        => 0,
 				'child_of'      => '',
 				'include'       => '',
-				'exclude'       => '',
+				'exclude'       => '', // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_list_pages() parameter.
 				'exclude_tree'  => '',
-				'meta_key'      => '',
-				'meta_value'    => '',
+				'meta_key'      => '', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Required wp_list_pages() parameter.
+				'meta_value'    => '', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Required wp_list_pages() parameter.
 				'authors'       => '',
 				'link_before'   => '',
 				'link_after'    => '',
@@ -143,11 +143,11 @@ if ( ! function_exists( 'ew_page_render_shortcode' ) ) :
 
 		$instance['child_of']     = absint( $atts['child_of'] );
 		$instance['include']      = sanitize_text_field( $atts['include'] );
-		$instance['exclude']      = sanitize_text_field( $atts['exclude'] );
+		$instance['exclude']      = sanitize_text_field( $atts['exclude'] ); // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_list_pages() parameter.
 		$instance['exclude_tree'] = sanitize_text_field( $atts['exclude_tree'] );
 
-		$instance['meta_key']   = sanitize_key( $atts['meta_key'] );
-		$instance['meta_value'] = sanitize_text_field( $atts['meta_value'] );
+		$instance['meta_key']   = sanitize_key( $atts['meta_key'] ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Required wp_list_pages() parameter.
+		$instance['meta_value'] = sanitize_text_field( $atts['meta_value'] ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Required wp_list_pages() parameter.
 
 		$instance['authors'] = sanitize_text_field( $atts['authors'] );
 
@@ -184,7 +184,7 @@ if ( ! function_exists( 'ew_page_list' ) ) :
 	 *
 	 * @return array|null Array of nav menus object with label and value pair, * or null if none.
 	 */
-	function ew_page_list() {
+	function ew_page_list() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- ew_ is this plugin's abbreviated prefix; wrapped in function_exists() guard.
 		$post_types = get_post_types(
 			array(
 				'public'       => true,
