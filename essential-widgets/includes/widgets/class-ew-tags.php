@@ -367,8 +367,8 @@ if ( ! class_exists( 'EW_Tags' ) ) :
 			$instance['exclude'] = preg_replace( '/[^0-9,]/', '', $new_instance['exclude'] ); // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_tag_cloud() parameter.
 
 			// Check if function exists.
-			$instance['topic_count_text_callback']  = empty( $new_instance['fallback_cb'] ) || function_exists( $new_instance['topic_count_text_callback'] ) ? $new_instance['topic_count_text_callback'] : 'default_topic_count_text';
-			$instance['topic_count_scale_callback'] = empty( $new_instance['fallback_cb'] ) || function_exists( $new_instance['topic_count_scale_callback'] ) ? $new_instance['topic_count_scale_callback'] : 'default_topic_count_scale';
+			$instance['topic_count_text_callback']  = ! empty( $new_instance['topic_count_text_callback'] ) && function_exists( $new_instance['topic_count_text_callback'] ) ? $new_instance['topic_count_text_callback'] : 'default_topic_count_text';
+			$instance['topic_count_scale_callback'] = ! empty( $new_instance['topic_count_scale_callback'] ) && function_exists( $new_instance['topic_count_scale_callback'] ) ? $new_instance['topic_count_scale_callback'] : 'default_topic_count_scale';
 
 			// Checkboxes.
 			$instance['show_count'] = isset( $new_instance['show_count'] ) ? 1 : 0;

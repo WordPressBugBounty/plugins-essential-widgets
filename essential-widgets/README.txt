@@ -5,9 +5,9 @@ Tags: widgets, pages, posts, tags, categories
 Requires at least: 5.9
 Requires PHP: 7.4
 Tested up to: 7.0
-Stable tag: 3.1
+Stable tag: 3.2
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Essential Widgets is a WordPress plugin for widgets that allows you to create and add amazing widgets with high customization option
 
@@ -75,6 +75,13 @@ Not so easy way (via FTP) :
 7. Tags
 
 == Changelog ==
+
+= 3.2 (Released: June 16, 2026) =
+* Bug Fixed: Pages widget no longer triggers a fatal error when adding it from the Widgets screen or Customizer
+* Bug Fixed: Settings link on the Plugins page no longer appears on unrelated plugins
+* Bug Fixed: Tags widget's custom callback fields were never actually validated before being saved
+* Improved: License links now use secure HTTPS
+* Code: Removed unused/duplicate admin hook registration code
 
 = 3.1 (Released: May 26, 2026) =
 * Bug Fixed: PHP fatal error in Tags block — undefined variable used as callable

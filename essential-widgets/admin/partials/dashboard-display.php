@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
             <div class="module-container ew-options">
             	<?php
-                    $options = essential_widgets_get_options( 'essential_widgets_options' );
+                    $options = essential_widgets_get_options();
                     $widget_list = essential_widgets_list();
                     foreach ( $widget_list as $key => $value ) :
                         $is_active = ! empty( $options[ $key ] );

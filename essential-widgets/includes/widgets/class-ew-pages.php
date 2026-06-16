@@ -18,6 +18,32 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @package Essential_Widgets
  */
+if ( ! function_exists( 'get_meta_keys' ) ) :
+	/**
+	 * Returns a list of distinct, non-private post meta keys for use in the
+	 * widget's "Order by meta key" dropdown.
+	 *
+	 * @since 3.2
+	 * @return array
+	 */
+	function get_meta_keys() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- guarded with function_exists(); shared helper used by both the free and pro Pages widgets.
+		global $wpdb;
+
+		$cached_keys = get_transient( 'ew_meta_keys' );
+		if ( false !== $cached_keys ) {
+			return $cached_keys;
+		}
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- distinct meta key lookup has no WP_Query equivalent; result is cached via transient below.
+		$keys = $wpdb->get_col( "SELECT DISTINCT meta_key FROM {$wpdb->postmeta} WHERE meta_key NOT LIKE '\_%' ORDER BY meta_key ASC" );
+		$keys = is_array( $keys ) ? $keys : array();
+
+		set_transient( 'ew_meta_keys', $keys, HOUR_IN_SECONDS );
+
+		return $keys;
+	}
+endif;
+
 if ( ! class_exists( 'EW_Pages' ) ) :
 	class EW_Pages extends WP_Widget // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- EW_ is this plugin's abbreviated prefix; wrapped in class_exists() guard.
 	{

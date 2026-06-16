@@ -165,7 +165,7 @@ class Essential_Widgets {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_settings_menu' );
 
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'register_settings' );
-		$this->loader->add_filter( 'plugin_action_links', $plugin_admin, 'action_links', 10, 2 );
+		$this->loader->add_filter( 'plugin_action_links_' . ESSENTIAL_WIDGETS_BASENAME, $plugin_admin, 'action_links', 10, 1 );
 		$this->loader->add_action( 'wp_ajax_ew_switch', $plugin_admin, 'ew_switch' );
 		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'add_plugin_meta_links', 10, 2 );
 

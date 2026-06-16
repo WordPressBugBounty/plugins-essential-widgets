@@ -116,7 +116,7 @@ if ( function_exists( 'register_block_type' ) ) :
 	);
 endif;
 
-if ( ! function_exists( 'ew_tags_render_shortcode' ) && class_exists( 'EW_Tags' ) ) :
+if ( ! function_exists( 'ew_tags_render_shortcode' ) ) :
 	add_shortcode( 'ew-tags', 'ew_tags_render_shortcode' );
 	function ew_tags_render_shortcode( $atts ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- ew_ is this plugin's abbreviated prefix; wrapped in function_exists() guard.
 		$instance['title']         = isset( $atts['title'] ) && 'Tags' === $atts['title']

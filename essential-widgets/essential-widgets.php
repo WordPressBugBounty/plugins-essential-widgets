@@ -16,11 +16,11 @@
  * Plugin Name:       Essential Widgets
  * Plugin URI:        https://catchplugins.com/plugins/essential-widgets/
  * Description:       Essential Widgets is a WordPress plugin for widgets that allows you to create and add amazing widgets with high customization option on your website without affecting your wallet.
- * Version:           3.1
+ * Version:           3.2
  * Author:            Catch Plugins
  * Author URI:        https://catchplugins.com/
  * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       essential-widgets
  * Domain Path:       /languages
  */
@@ -31,7 +31,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 // Define Version
-define( 'ESSENTIAL_WIDGETS_VERSION', '3.1' );
+define( 'ESSENTIAL_WIDGETS_VERSION', '3.2' );
 
 /**
  * The code that runs during plugin activation.

@@ -41,20 +41,6 @@ class Essential_Widgets_Admin {
         $this->version     = $version;
     }
 
-	/**
-     * Register hooks for admin.
-     */
-    public function hooks() {
-        add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
-        add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-        add_action( 'admin_menu', array( $this, 'add_plugin_settings_menu' ) );
-        add_filter( 'plugin_action_links', array( $this, 'add_plugin_meta_links' ), 10, 2 );
-        add_action( 'wp_ajax_ew_switch', array( $this, 'ew_switch' ) );
-        add_action( 'admin_init', array( $this, 'register_settings' ) );
-        add_filter( 'plugin_action_links_' . ESSENTIAL_WIDGETS_BASENAME, [ $this, 'action_links' ] );
-
-    }
-
     /**
      * Enqueue admin styles.
      *
