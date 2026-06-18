@@ -5,7 +5,7 @@ Tags: widgets, pages, posts, tags, categories
 Requires at least: 5.9
 Requires PHP: 7.4
 Tested up to: 7.0
-Stable tag: 3.2
+Stable tag: 3.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -75,6 +75,10 @@ Not so easy way (via FTP) :
 7. Tags
 
 == Changelog ==
+
+= 3.2.1 (Released: June 18, 2026) =
+* Bug Fixed: prefix issue in get_meta_keys function
+* Bug Fixed: defined check for plugin version
 
 = 3.2 (Released: June 16, 2026) =
 * Bug Fixed: Pages widget no longer triggers a fatal error when adding it from the Widgets screen or Customizer

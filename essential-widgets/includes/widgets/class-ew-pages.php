@@ -1,7 +1,7 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-    exit; // Exit if accessed directly.
+if (! defined('ABSPATH')) {
+	exit; // Exit if accessed directly.
 }
 
 /**
@@ -18,33 +18,37 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @package Essential_Widgets
  */
-if ( ! function_exists( 'get_meta_keys' ) ) :
+if (! function_exists('ew_get_meta_keys')) :
 	/**
 	 * Returns a list of distinct, non-private post meta keys for use in the
 	 * widget's "Order by meta key" dropdown.
 	 *
+	 * Named ew_get_meta_keys() (not get_meta_keys()) to avoid colliding with
+	 * WordPress core's own get_meta_keys() in wp-admin/includes/post.php.
+	 *
 	 * @since 3.2
 	 * @return array
 	 */
-	function get_meta_keys() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- guarded with function_exists(); shared helper used by both the free and pro Pages widgets.
+	function ew_get_meta_keys()
+	{ // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- guarded with function_exists(); shared helper used by both the free and pro Pages widgets.
 		global $wpdb;
 
-		$cached_keys = get_transient( 'ew_meta_keys' );
-		if ( false !== $cached_keys ) {
+		$cached_keys = get_transient('ew_meta_keys');
+		if (false !== $cached_keys) {
 			return $cached_keys;
 		}
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- distinct meta key lookup has no WP_Query equivalent; result is cached via transient below.
-		$keys = $wpdb->get_col( "SELECT DISTINCT meta_key FROM {$wpdb->postmeta} WHERE meta_key NOT LIKE '\_%' ORDER BY meta_key ASC" );
-		$keys = is_array( $keys ) ? $keys : array();
+		$keys = $wpdb->get_col("SELECT DISTINCT meta_key FROM {$wpdb->postmeta} WHERE meta_key NOT LIKE '\_%' ORDER BY meta_key ASC");
+		$keys = is_array($keys) ? $keys : array();
 
-		set_transient( 'ew_meta_keys', $keys, HOUR_IN_SECONDS );
+		set_transient('ew_meta_keys', $keys, HOUR_IN_SECONDS);
 
 		return $keys;
 	}
 endif;
 
-if ( ! class_exists( 'EW_Pages' ) ) :
+if (! class_exists('EW_Pages')) :
 	class EW_Pages extends WP_Widget // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- EW_ is this plugin's abbreviated prefix; wrapped in class_exists() guard.
 	{
 
@@ -56,11 +60,12 @@ if ( ! class_exists( 'EW_Pages' ) ) :
 		 */
 		protected $defaults;
 
-		public function __construct() {
+		public function __construct()
+		{
 
 			// Set up the defaults.
 			$this->defaults = array(
-				'title'        => esc_attr__( 'Pages', 'essential-widgets' ),
+				'title'        => esc_attr__('Pages', 'essential-widgets'),
 				'post_type'    => 'page',
 				'depth'        => 0,
 				'number'       => '',
@@ -78,12 +83,12 @@ if ( ! class_exists( 'EW_Pages' ) ) :
 				'hierarchical' => true,
 				'sort_column'  => 'post_title',
 				'sort_order'   => 'ASC',
-				'date_format'  => get_option( 'date_format' ),
+				'date_format'  => get_option('date_format'),
 			);
 
 			$widget_ops = array(
 				'classname'   => 'essential-widgets ew-pages ewpages',
-				'description' => esc_html__( 'Displays a list of pages.', 'essential-widgets' ),
+				'description' => esc_html__('Displays a list of pages.', 'essential-widgets'),
 			);
 
 			$control_ops = array(
@@ -92,7 +97,7 @@ if ( ! class_exists( 'EW_Pages' ) ) :
 
 			parent::__construct(
 				'ew-pages', // Base ID
-				esc_html__( 'EW: Pages', 'essential-widgets' ), // Name
+				esc_html__('EW: Pages', 'essential-widgets'), // Name
 				$widget_ops,
 				$control_ops
 			);
@@ -106,9 +111,10 @@ if ( ! class_exists( 'EW_Pages' ) ) :
 		 * @param  array $instance
 		 * @param  void
 		 */
-		public function form( $instance ) {
+		public function form($instance)
+		{
 			// Merge the user-selected arguments with the defaults.
-			$instance = wp_parse_args( (array) $instance, $this->defaults );
+			$instance = wp_parse_args((array) $instance, $this->defaults);
 
 			$post_types = get_post_types(
 				array(
@@ -119,44 +125,44 @@ if ( ! class_exists( 'EW_Pages' ) ) :
 			);
 
 			$sort_order = array(
-				'ASC'  => esc_attr__( 'Ascending', 'essential-widgets' ),
-				'DESC' => esc_attr__( 'Descending', 'essential-widgets' ),
+				'ASC'  => esc_attr__('Ascending', 'essential-widgets'),
+				'DESC' => esc_attr__('Descending', 'essential-widgets'),
 			);
 
 			$sort_column = array(
-				'post_author'   => esc_attr__( 'Author', 'essential-widgets' ),
-				'post_date'     => esc_attr__( 'Date', 'essential-widgets' ),
-				'ID'            => esc_attr__( 'ID', 'essential-widgets' ),
-				'menu_order'    => esc_attr__( 'Menu Order', 'essential-widgets' ),
-				'post_modified' => esc_attr__( 'Modified', 'essential-widgets' ),
-				'post_name'     => esc_attr__( 'Slug', 'essential-widgets' ),
-				'post_title'    => esc_attr__( 'Title', 'essential-widgets' ),
+				'post_author'   => esc_attr__('Author', 'essential-widgets'),
+				'post_date'     => esc_attr__('Date', 'essential-widgets'),
+				'ID'            => esc_attr__('ID', 'essential-widgets'),
+				'menu_order'    => esc_attr__('Menu Order', 'essential-widgets'),
+				'post_modified' => esc_attr__('Modified', 'essential-widgets'),
+				'post_name'     => esc_attr__('Slug', 'essential-widgets'),
+				'post_title'    => esc_attr__('Title', 'essential-widgets'),
 			);
 
 			$show_date = array(
-				''         => esc_attr__( 'Select', 'essential-widgets' ),
-				'created'  => esc_attr__( 'Created', 'essential-widgets' ),
-				'modified' => esc_attr__( 'Modified', 'essential-widgets' ),
+				''         => esc_attr__('Select', 'essential-widgets'),
+				'created'  => esc_attr__('Created', 'essential-widgets'),
+				'modified' => esc_attr__('Modified', 'essential-widgets'),
 			);
 
-			$meta_key = array_merge( array( '' ), (array) get_meta_keys() ); ?>
+			$meta_key = array_merge(array(''), (array) get_meta_keys()); ?>
 
 			<p>
 				<label>
-					<?php esc_html_e( 'Title:', 'essential-widgets' ); ?>
-					<input type="text" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" placeholder="<?php echo esc_attr( $this->defaults['title'] ); ?>" />
+					<?php esc_html_e('Title:', 'essential-widgets'); ?>
+					<input type="text" class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>" name="<?php echo esc_attr($this->get_field_name('title')); ?>" value="<?php echo esc_attr($instance['title']); ?>" placeholder="<?php echo esc_attr($this->defaults['title']); ?>" />
 				</label>
 			</p>
 
 			<p>
 				<label>
-					<?php esc_html_e( 'Post Type:', 'essential-widgets' ); ?>
+					<?php esc_html_e('Post Type:', 'essential-widgets'); ?>
 
-					<select class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'post_type' ) ); ?>">
+					<select class="widefat" name="<?php echo esc_attr($this->get_field_name('post_type')); ?>">
 
-						<?php foreach ( $post_types as $post_type ) : ?>
+						<?php foreach ($post_types as $post_type) : ?>
 
-							<option value="<?php echo esc_attr( $post_type->name ); ?>" <?php selected( $instance['post_type'], $post_type->name ); ?>><?php echo esc_html( $post_type->labels->singular_name ); ?></option>
+							<option value="<?php echo esc_attr($post_type->name); ?>" <?php selected($instance['post_type'], $post_type->name); ?>><?php echo esc_html($post_type->labels->singular_name); ?></option>
 
 						<?php endforeach; ?>
 
@@ -166,29 +172,13 @@ if ( ! class_exists( 'EW_Pages' ) ) :
 
 			<p>
 				<label>
-					<?php esc_html_e( 'Order:', 'essential-widgets' ); ?>
+					<?php esc_html_e('Order:', 'essential-widgets'); ?>
 
-					<select class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'sort_order' ) ); ?>">
+					<select class="widefat" name="<?php echo esc_attr($this->get_field_name('sort_order')); ?>">
 
-						<?php foreach ( $sort_order as $option_value => $option_label ) : ?>
+						<?php foreach ($sort_order as $option_value => $option_label) : ?>
 
-							<option value="<?php echo esc_attr( $option_value ); ?>" <?php selected( $instance['sort_order'], $option_value ); ?>><?php echo esc_html( $option_label ); ?></option>
-
-						<?php endforeach; ?>
-
-					</select>
-				</label>
-			</p>
-
-			<p>
-				<label>
-					<?php esc_html_e( 'Order By:', 'essential-widgets' ); ?>
-
-					<select class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'sort_column' ) ); ?>">
-
-						<?php foreach ( $sort_column as $option_value => $option_label ) : ?>
-
-							<option value="<?php echo esc_attr( $option_value ); ?>" <?php selected( $instance['sort_column'], $option_value ); ?>><?php echo esc_html( $option_label ); ?></option>
+							<option value="<?php echo esc_attr($option_value); ?>" <?php selected($instance['sort_order'], $option_value); ?>><?php echo esc_html($option_label); ?></option>
 
 						<?php endforeach; ?>
 
@@ -198,68 +188,84 @@ if ( ! class_exists( 'EW_Pages' ) ) :
 
 			<p>
 				<label>
-					<?php esc_html_e( 'Depth:', 'essential-widgets' ); ?>
-					<input type="number" class="widefat" size="5" min="0" name="<?php echo esc_attr( $this->get_field_name( 'depth' ) ); ?>" value="<?php echo esc_attr( $instance['depth'] ); ?>" placeholder="0" />
+					<?php esc_html_e('Order By:', 'essential-widgets'); ?>
+
+					<select class="widefat" name="<?php echo esc_attr($this->get_field_name('sort_column')); ?>">
+
+						<?php foreach ($sort_column as $option_value => $option_label) : ?>
+
+							<option value="<?php echo esc_attr($option_value); ?>" <?php selected($instance['sort_column'], $option_value); ?>><?php echo esc_html($option_label); ?></option>
+
+						<?php endforeach; ?>
+
+					</select>
 				</label>
 			</p>
 
 			<p>
 				<label>
-					<?php esc_html_e( 'Number:', 'essential-widgets' ); ?>
-					<input type="number" class="widefat" size="5" min="0" name="<?php echo esc_attr( $this->get_field_name( 'number' ) ); ?>" value="<?php echo esc_attr( $instance['number'] ); ?>" placeholder="0" />
+					<?php esc_html_e('Depth:', 'essential-widgets'); ?>
+					<input type="number" class="widefat" size="5" min="0" name="<?php echo esc_attr($this->get_field_name('depth')); ?>" value="<?php echo esc_attr($instance['depth']); ?>" placeholder="0" />
 				</label>
 			</p>
 
 			<p>
 				<label>
-					<?php esc_html_e( 'Offset:', 'essential-widgets' ); ?>
-					<input type="number" class="widefat" size="5" min="0" name="<?php echo esc_attr( $this->get_field_name( 'offset' ) ); ?>" value="<?php echo esc_attr( $instance['offset'] ); ?>" placeholder="0" />
+					<?php esc_html_e('Number:', 'essential-widgets'); ?>
+					<input type="number" class="widefat" size="5" min="0" name="<?php echo esc_attr($this->get_field_name('number')); ?>" value="<?php echo esc_attr($instance['number']); ?>" placeholder="0" />
 				</label>
 			</p>
 
 			<p>
 				<label>
-					<?php esc_html_e( 'Child Of:', 'essential-widgets' ); ?>
-					<input type="text" class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'child_of' ) ); ?>" value="<?php echo esc_attr( $instance['child_of'] ); ?>" placeholder="0" />
+					<?php esc_html_e('Offset:', 'essential-widgets'); ?>
+					<input type="number" class="widefat" size="5" min="0" name="<?php echo esc_attr($this->get_field_name('offset')); ?>" value="<?php echo esc_attr($instance['offset']); ?>" placeholder="0" />
 				</label>
 			</p>
 
 			<p>
 				<label>
-					<?php esc_html_e( 'Include:', 'essential-widgets' ); ?>
-					<input type="text" class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'include' ) ); ?>" value="<?php echo esc_attr( $instance['include'] ); ?>" placeholder="1,2,3&hellip;" />
+					<?php esc_html_e('Child Of:', 'essential-widgets'); ?>
+					<input type="text" class="widefat" name="<?php echo esc_attr($this->get_field_name('child_of')); ?>" value="<?php echo esc_attr($instance['child_of']); ?>" placeholder="0" />
 				</label>
 			</p>
 
 			<p>
 				<label>
-					<?php esc_html_e( 'Exclude:', 'essential-widgets' ); ?>
-					<input type="text" class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'exclude' ) ); ?>" value="<?php echo esc_attr( $instance['exclude'] ); ?>" placeholder="1,2,3&hellip;" />
+					<?php esc_html_e('Include:', 'essential-widgets'); ?>
+					<input type="text" class="widefat" name="<?php echo esc_attr($this->get_field_name('include')); ?>" value="<?php echo esc_attr($instance['include']); ?>" placeholder="1,2,3&hellip;" />
+				</label>
+			</p>
+
+			<p>
+				<label>
+					<?php esc_html_e('Exclude:', 'essential-widgets'); ?>
+					<input type="text" class="widefat" name="<?php echo esc_attr($this->get_field_name('exclude')); ?>" value="<?php echo esc_attr($instance['exclude']); ?>" placeholder="1,2,3&hellip;" />
 				</label>
 			</p>
 
 			<p class="button-primary ect-toggle-btn more">
-				<span class="ect-more-text"><?php esc_html_e( 'More Options', 'essential-widgets' ); ?><i class="dashicons dashicons-arrow-down"></i></span>
-				<span class="ect-hide-text"><?php esc_html_e( 'Hide Options', 'essential-widgets' ); ?><i class="dashicons dashicons-arrow-up"></i></span>
+				<span class="ect-more-text"><?php esc_html_e('More Options', 'essential-widgets'); ?><i class="dashicons dashicons-arrow-down"></i></span>
+				<span class="ect-hide-text"><?php esc_html_e('Hide Options', 'essential-widgets'); ?><i class="dashicons dashicons-arrow-up"></i></span>
 
 			<div class="advanced-section">
 
 				<p>
 					<label>
-						<?php esc_html_e( 'Exclude Tree:', 'essential-widgets' ); ?>
-						<input type="text" class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'exclude_tree' ) ); ?>" value="<?php echo esc_attr( $instance['exclude_tree'] ); ?>" placeholder="1,2,3&hellip;" />
+						<?php esc_html_e('Exclude Tree:', 'essential-widgets'); ?>
+						<input type="text" class="widefat" name="<?php echo esc_attr($this->get_field_name('exclude_tree')); ?>" value="<?php echo esc_attr($instance['exclude_tree']); ?>" placeholder="1,2,3&hellip;" />
 					</label>
 				</p>
 
 				<p>
 					<label>
-						<?php esc_html_e( 'Meta Key:', 'essential-widgets' ); ?>
+						<?php esc_html_e('Meta Key:', 'essential-widgets'); ?>
 
-						<select class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'meta_key' ) ); ?>">
+						<select class="widefat" name="<?php echo esc_attr($this->get_field_name('meta_key')); ?>">
 
-							<?php foreach ( $meta_key as $meta ) : ?>
+							<?php foreach ($meta_key as $meta) : ?>
 
-								<option value="<?php echo esc_attr( $meta ); ?>" <?php selected( $instance['meta_key'], $meta ); ?>><?php echo esc_html( $meta ); ?></option>
+								<option value="<?php echo esc_attr($meta); ?>" <?php selected($instance['meta_key'], $meta); ?>><?php echo esc_html($meta); ?></option>
 
 							<?php endforeach; ?>
 
@@ -269,41 +275,41 @@ if ( ! class_exists( 'EW_Pages' ) ) :
 
 				<p>
 					<label>
-						<?php esc_html_e( 'Meta Value:', 'essential-widgets' ); ?>
-						<input type="text" class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'meta_value' ) ); ?>" value="<?php echo esc_attr( $instance['meta_value'] ); ?>" />
+						<?php esc_html_e('Meta Value:', 'essential-widgets'); ?>
+						<input type="text" class="widefat" name="<?php echo esc_attr($this->get_field_name('meta_value')); ?>" value="<?php echo esc_attr($instance['meta_value']); ?>" />
 					</label>
 				</p>
 
 				<p>
 					<label>
-						<?php esc_html_e( 'Authors:', 'essential-widgets' ); ?>
-						<input type="text" class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'authors' ) ); ?>" value="<?php echo esc_attr( $instance['authors'] ); ?>" placeholder="1,2,3&hellip;" />
+						<?php esc_html_e('Authors:', 'essential-widgets'); ?>
+						<input type="text" class="widefat" name="<?php echo esc_attr($this->get_field_name('authors')); ?>" value="<?php echo esc_attr($instance['authors']); ?>" placeholder="1,2,3&hellip;" />
 					</label>
 				</p>
 
 				<p>
 					<label>
-						<?php esc_html_e( 'Link Before:', 'essential-widgets' ); ?>
-						<input type="text" class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'link_before' ) ); ?>" value="<?php echo esc_attr( $instance['link_before'] ); ?>" />
+						<?php esc_html_e('Link Before:', 'essential-widgets'); ?>
+						<input type="text" class="widefat" name="<?php echo esc_attr($this->get_field_name('link_before')); ?>" value="<?php echo esc_attr($instance['link_before']); ?>" />
 					</label>
 				</p>
 
 				<p>
 					<label>
-						<?php esc_html_e( 'Link After:', 'essential-widgets' ); ?>
-						<input type="text" class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'link_after' ) ); ?>" value="<?php echo esc_attr( $instance['link_after'] ); ?>" />
+						<?php esc_html_e('Link After:', 'essential-widgets'); ?>
+						<input type="text" class="widefat" name="<?php echo esc_attr($this->get_field_name('link_after')); ?>" value="<?php echo esc_attr($instance['link_after']); ?>" />
 					</label>
 				</p>
 
 				<p>
 					<label>
-						<?php esc_html_e( 'Show Date:', 'essential-widgets' ); ?>
+						<?php esc_html_e('Show Date:', 'essential-widgets'); ?>
 
-						<select class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'show_date' ) ); ?>">
+						<select class="widefat" name="<?php echo esc_attr($this->get_field_name('show_date')); ?>">
 
-							<?php foreach ( $show_date as $option_value => $option_label ) : ?>
+							<?php foreach ($show_date as $option_value => $option_label) : ?>
 
-								<option value="<?php echo esc_attr( $option_value ); ?>" <?php selected( $instance['show_date'], $option_value ); ?>><?php echo esc_html( $option_label ); ?></option>
+								<option value="<?php echo esc_attr($option_value); ?>" <?php selected($instance['show_date'], $option_value); ?>><?php echo esc_html($option_label); ?></option>
 
 							<?php endforeach; ?>
 
@@ -313,22 +319,22 @@ if ( ! class_exists( 'EW_Pages' ) ) :
 
 				<p>
 					<label>
-						<?php esc_html_e( 'Date Format:', 'essential-widgets' ); ?>
-						<input type="text" class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'date_format' ) ); ?>" value="<?php echo esc_attr( $instance['date_format'] ); ?>" placeholder="<?php echo esc_attr( get_option( 'date_format' ) ); ?>" />
+						<?php esc_html_e('Date Format:', 'essential-widgets'); ?>
+						<input type="text" class="widefat" name="<?php echo esc_attr($this->get_field_name('date_format')); ?>" value="<?php echo esc_attr($instance['date_format']); ?>" placeholder="<?php echo esc_attr(get_option('date_format')); ?>" />
 					</label>
 				</p>
 
 				<p>
 					<label>
-						<input type="checkbox" <?php checked( $instance['hierarchical'], true ); ?> name="<?php echo esc_attr( $this->get_field_name( 'hierarchical' ) ); ?>" />
-						<?php esc_html_e( 'Hierarchical?', 'essential-widgets' ); ?>
+						<input type="checkbox" <?php checked($instance['hierarchical'], true); ?> name="<?php echo esc_attr($this->get_field_name('hierarchical')); ?>" />
+						<?php esc_html_e('Hierarchical?', 'essential-widgets'); ?>
 					</label>
 				</p>
 
 			</div><!-- .advanced-section -->
 
 			<div style="clear:both;">&nbsp;</div>
-			<?php
+<?php
 		}
 
 		/**
@@ -342,53 +348,54 @@ if ( ! class_exists( 'EW_Pages' ) ) :
 		 * $old_instance Old settings for this instance
 		 * Settings to save or bool false to cancel saving
 		 */
-		public function update( $new_instance, $old_instance ) {
+		public function update($new_instance, $old_instance)
+		{
 			$instance = $old_instance;
 
 			// Sanitize title.
-			$instance['title'] = sanitize_text_field( $new_instance['title'] );
+			$instance['title'] = sanitize_text_field($new_instance['title']);
 
 			// Strip tags.
-			$instance['meta_key']    = wp_strip_all_tags( $new_instance['meta_key'] ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Required wp_list_pages() parameter.
-			$instance['meta_value']  = wp_strip_all_tags( $new_instance['meta_value'] ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Required wp_list_pages() parameter.
-			$instance['date_format'] = wp_strip_all_tags( $new_instance['date_format'] );
+			$instance['meta_key']    = wp_strip_all_tags($new_instance['meta_key']); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Required wp_list_pages() parameter.
+			$instance['meta_value']  = wp_strip_all_tags($new_instance['meta_value']); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Required wp_list_pages() parameter.
+			$instance['date_format'] = wp_strip_all_tags($new_instance['date_format']);
 
 			// Sanitize key.
-			$instance['post_type'] = sanitize_key( $new_instance['post_type'] );
+			$instance['post_type'] = sanitize_key($new_instance['post_type']);
 
 			// Whitelist options.
-			$sort_order  = array( 'ASC', 'DESC' );
-			$sort_column = array( 'post_author', 'post_date', 'ID', 'menu_order', 'post_modified', 'post_name', 'post_title' );
-			$show_date   = array( '', 'created', 'modified' );
+			$sort_order  = array('ASC', 'DESC');
+			$sort_column = array('post_author', 'post_date', 'ID', 'menu_order', 'post_modified', 'post_name', 'post_title');
+			$show_date   = array('', 'created', 'modified');
 
-			$instance['sort_column'] = in_array( $new_instance['sort_column'], $sort_column, true ) ? $new_instance['sort_column'] : 'post_title';
-			$instance['sort_order']  = in_array( $new_instance['sort_order'], $sort_order, true )  ? $new_instance['sort_order']  : 'ASC';
-			$instance['show_date']   = in_array( $new_instance['show_date'], $show_date, true )   ? $new_instance['show_date']   : '';
+			$instance['sort_column'] = in_array($new_instance['sort_column'], $sort_column, true) ? $new_instance['sort_column'] : 'post_title';
+			$instance['sort_order']  = in_array($new_instance['sort_order'], $sort_order, true)  ? $new_instance['sort_order']  : 'ASC';
+			$instance['show_date']   = in_array($new_instance['show_date'], $show_date, true)   ? $new_instance['show_date']   : '';
 
 			// Text boxes. Make sure user can use 'unfiltered_html'.
-			$instance['link_before'] = current_user_can( 'unfiltered_html' ) ? $new_instance['link_before'] : wp_kses_post( $new_instance['link_before'] );
-			$instance['link_after']  = current_user_can( 'unfiltered_html' ) ? $new_instance['link_after'] : wp_kses_post( $new_instance['link_after'] );
+			$instance['link_before'] = current_user_can('unfiltered_html') ? $new_instance['link_before'] : wp_kses_post($new_instance['link_before']);
+			$instance['link_after']  = current_user_can('unfiltered_html') ? $new_instance['link_after'] : wp_kses_post($new_instance['link_after']);
 
 			// Integers.
-			$instance['number'] 	= absint( $new_instance['number'] );
-			$instance['depth']    	= absint( $new_instance['depth'] );
-			$instance['child_of']	= absint( $new_instance['child_of'] );
-			$instance['offset']		= absint( $new_instance['offset'] );
+			$instance['number'] 	= absint($new_instance['number']);
+			$instance['depth']    	= absint($new_instance['depth']);
+			$instance['child_of']	= absint($new_instance['child_of']);
+			$instance['offset']		= absint($new_instance['offset']);
 
 			// Sanitize text field
-			$instance['include']      = sanitize_text_field( $new_instance['include'] );
-			$instance['exclude']      = sanitize_text_field( $new_instance['exclude'] ); // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_list_pages() parameter.
-			$instance['exclude_tree'] = sanitize_text_field( $new_instance['exclude_tree'] );
-			$instance['authors']      = sanitize_text_field( $new_instance['authors'] );
+			$instance['include']      = sanitize_text_field($new_instance['include']);
+			$instance['exclude']      = sanitize_text_field($new_instance['exclude']); // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_list_pages() parameter.
+			$instance['exclude_tree'] = sanitize_text_field($new_instance['exclude_tree']);
+			$instance['authors']      = sanitize_text_field($new_instance['authors']);
 
 			// Then restrict to numbers & commas
-			$instance['include']      = preg_replace( '/[^0-9,]/', '', $new_instance['include'] );
-			$instance['exclude']      = preg_replace( '/[^0-9,]/', '', $new_instance['exclude'] ); // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_list_pages() parameter.
-			$instance['exclude_tree'] = preg_replace( '/[^0-9,]/', '', $new_instance['exclude_tree'] );
-			$instance['authors']      = preg_replace( '/[^0-9,]/', '', $new_instance['authors'] );
+			$instance['include']      = preg_replace('/[^0-9,]/', '', $new_instance['include']);
+			$instance['exclude']      = preg_replace('/[^0-9,]/', '', $new_instance['exclude']); // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required wp_list_pages() parameter.
+			$instance['exclude_tree'] = preg_replace('/[^0-9,]/', '', $new_instance['exclude_tree']);
+			$instance['authors']      = preg_replace('/[^0-9,]/', '', $new_instance['authors']);
 
 			// Checkboxes.
-			$instance['hierarchical'] = isset( $new_instance['hierarchical'] ) ? 1 : 0;
+			$instance['hierarchical'] = isset($new_instance['hierarchical']) ? 1 : 0;
 
 			// Return sanitized options.
 			return $instance;
@@ -400,32 +407,34 @@ if ( ! class_exists( 'EW_Pages' ) ) :
 		 * $args Display arguments including before_title, after_title, before_widget, and after_widget.
 		 * $instance The settings for the particular instance of the widget
 		 */
-		public function widget( $args, $instance ) {
+		public function widget($args, $instance)
+		{
 			// Merge instance with defaults.
-			$instance = wp_parse_args( $instance, $this->defaults );
+			$instance = wp_parse_args($instance, $this->defaults);
 
 			// Escape widget wrapper attributes.
-			echo wp_kses_post( $args['before_widget'] );
+			echo wp_kses_post($args['before_widget']);
 
 			// If a title was input by the user, display it safely.
-			if ( ! empty( $instance['title'] ) ) {
-				echo wp_kses_post( $args['before_title'] );
+			if (! empty($instance['title'])) {
+				echo wp_kses_post($args['before_title']);
 
 				// Apply filters to title, then escape it for output
-				$title = apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base );
-				echo esc_html( $title );
+				$title = apply_filters('widget_title', $instance['title'], $instance, $this->id_base);
+				echo esc_html($title);
 
-				echo wp_kses_post( $args['after_title'] );
+				echo wp_kses_post($args['after_title']);
 			}
 
 			// Output the main content of the widget (shortcode output)
-			echo wp_kses_post( $this->shortcode( $instance ) );
+			echo wp_kses_post($this->shortcode($instance));
 
 			// Close the widget wrapper safely.
-			echo wp_kses_post( $args['after_widget'] );
+			echo wp_kses_post($args['after_widget']);
 		}
 
-		public function shortcode( $atts ) {
+		public function shortcode($atts)
+		{
 			// Set the $title_li and $echo to false.
 			$atts['title_li'] = false;
 			$atts['echo']     = false;
@@ -433,31 +442,32 @@ if ( ! class_exists( 'EW_Pages' ) ) :
 			$ew_pages = '';
 
 			// Only show this title in block element and not on widget.
-			if ( isset( $atts['is_block'] ) && true === $atts['is_block'] && !empty( $atts['title'] ) ) {
-				$ew_pages .= '<h2 class="ew-page-block-title">' . esc_html( $atts['title'] ) . '</h2>';
+			if (isset($atts['is_block']) && true === $atts['is_block'] && !empty($atts['title'])) {
+				$ew_pages .= '<h2 class="ew-page-block-title">' . esc_html($atts['title']) . '</h2>';
 			}
 
 			// Output the page list.
 			$ew_pages .= '<ul class="pages">' . str_replace(
-				array( "\r", "\n", "\t" ),
+				array("\r", "\n", "\t"),
 				'',
-				wp_list_pages( $atts )
+				wp_list_pages($atts)
 			) . '</ul>';
 
-			return wp_kses_post( $ew_pages );
+			return wp_kses_post($ew_pages);
 		}
 	}
 endif;
 
 
-if ( ! function_exists( 'ew_pages_register' ) ) :
+if (! function_exists('ew_pages_register')) :
 	/**
 	 * Intiate About_Widget Class.
 	 *
 	 * @since 1.0.0
 	 */
-	function ew_pages_register() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- ew_ is this plugin's abbreviated prefix.
-		register_widget( 'EW_Pages' );
+	function ew_pages_register()
+	{ // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- ew_ is this plugin's abbreviated prefix.
+		register_widget('EW_Pages');
 	}
-	add_action( 'widgets_init', 'ew_pages_register' );
+	add_action('widgets_init', 'ew_pages_register');
 endif;
